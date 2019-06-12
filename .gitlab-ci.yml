@@ -1,0 +1,31 @@
+test:
+  stage: test
+  image: hseeberger/scala-sbt:8u181_2.12.8_1.2.8
+  script:
+    - >-
+      sbt
+      -sbt-dir .sbt
+      -ivy .ivy2
+      -mem 2048
+      test
+  cache:
+    paths:
+      - .sbt
+      - .ivy2
+
+scalafmt:
+  stage: test
+  image: hseeberger/scala-sbt:8u181_2.12.8_1.2.8
+  script:
+    - >-
+      sbt
+      -sbt-dir .sbt
+      -ivy .ivy2
+      -mem 2048
+      scalafmt::test
+      test:scalafmt::test
+      sbt:scalafmt::test
+  cache:
+    paths:
+      - .sbt
+      - .ivy2
