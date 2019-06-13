@@ -4,7 +4,7 @@ val Scala2_12 = "2.12.8"
 val supportedScalaVersions = List(Scala2_13, Scala2_12)
 
 ThisBuild / scalaVersion := Scala2_13
-ThisBuild / organization := "com.github.nomadblacky"
+ThisBuild / organization := "dev.nomadblacky"
 ThisBuild / organizationName := "NomadBlacky"
 
 lazy val root = (project in file("."))
