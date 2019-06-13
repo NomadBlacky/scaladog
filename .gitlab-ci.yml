@@ -22,9 +22,8 @@ scalafmt:
       -sbt-dir .sbt
       -ivy .ivy2
       -mem 2048
-      scalafmt::test
-      test:scalafmt::test
-      sbt:scalafmt::test
+      scalafmtCheckAll
+      scalafmtSbtCheck
   cache:
     paths:
       - .sbt
