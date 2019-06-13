@@ -3,9 +3,9 @@ import requests.Requester
 
 import scala.util.Try
 
-private[scaladog] class Client(apiKey: String, appKey: String, site: String, _requester: Option[Requester]) {
+private[scaladog] class Client(apiKey: String, appKey: String, site: DatadogSite, _requester: Option[Requester]) {
 
-  private[this] val baseUrl = s"https://api.datadoghq.$site/api/v1"
+  private[this] val baseUrl = s"https://api.datadoghq.${site.value}/api/v1"
 
   private def requester(default: Requester) = _requester.getOrElse(default)
 
@@ -25,6 +25,6 @@ private[scaladog] class Client(apiKey: String, appKey: String, site: String, _re
 
 object Client {
 
-  def apply(apiKey: String, appKey: String, site: String = "com"): Client =
+  def apply(apiKey: String, appKey: String, site: DatadogSite = DatadogSite.US): Client =
     new Client(apiKey, appKey, site, None)
 }

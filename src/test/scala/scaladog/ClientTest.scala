@@ -18,7 +18,7 @@ class ClientTest extends FunSuite {
         new ResponseBlob(body.getBytes("utf-8")),
         None
       )
-    new Client("api_key", "app_key", "site", Some(new TestRequester(response)))
+    new Client("api_key", "app_key", DatadogSite.US, Some(new TestRequester(response)))
   }
 
   test("validate") {
