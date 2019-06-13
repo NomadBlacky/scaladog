@@ -7,7 +7,7 @@ test:
       -sbt-dir .sbt
       -ivy .ivy2
       -mem 2048
-      test
+      +test
   cache:
     paths:
       - .sbt
