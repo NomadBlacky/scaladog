@@ -31,3 +31,5 @@ developers := List(
     url = url("https://www.nomadblacky.dev")
   )
 )
+
+publishTo in ThisBuild := sonatypePublishTo.value
