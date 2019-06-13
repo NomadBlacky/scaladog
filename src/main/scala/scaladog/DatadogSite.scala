@@ -8,7 +8,7 @@ object DatadogSite {
 
   def fromString(string: String): Option[DatadogSite] = string.toLowerCase match {
     case "us" | "com" => Some(US)
-    case "eu" => Some(EU)
-    case _ => None
+    case "eu"         => Some(EU)
+    case _            => None
   }
 }

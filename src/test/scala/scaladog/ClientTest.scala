@@ -1,12 +1,12 @@
 package scaladog
 import java.net.HttpCookie
 
-import org.scalatest.FunSuite
+import org.scalatest.FunSpec
 import requests._
 
 import scala.util.Success
 
-class ClientTest extends FunSuite {
+class ClientTest extends FunSpec {
 
   def genTestClient(url: String, statusCode: Int, body: String) = {
     val response =
@@ -21,17 +21,50 @@ class ClientTest extends FunSuite {
     new Client("api_key", "app_key", DatadogSite.US, Some(new TestRequester(response)))
   }
 
-  test("validate") {
-    val client = genTestClient(
-      url = "https://api.datadoghq.com/api/v1/validate",
-      statusCode = 200,
-      """{
-        |    "valid": true
-        |}
-      """.stripMargin.trim
-    )
+  describe("apply default") {
 
-    assert(client.validate() == Success(true))
+    it("should throw IllegalArgumentException if DATADOG_API_KEY is not found") {
+      TestUtils.removeEnv("DATADOG_API_KEY")
+      assertThrows[IllegalArgumentException] {
+        Client(appKey = "app_key", site = DatadogSite.US)
+      }
+    }
+
+    it("should throw IllegalArgumentException if DATADOG_APP_KEY is not found") {
+      TestUtils.removeEnv("DATADOG_APP_KEY")
+      assertThrows[IllegalArgumentException] {
+        Client(apiKey = "api_key", site = DatadogSite.US)
+      }
+    }
+
+    it("should use DatadogSite.US if DATADOG_SITE is not found") {
+      TestUtils.removeEnv("DATADOG_SITE")
+      val client = Client(apiKey = "api_key", appKey = "app_key")
+      assert(client.site == DatadogSite.US)
+    }
+
+    it("should throw IllegalArgumentException if DATADOG_SITE is invalid value") {
+      TestUtils.setEnv("DATADOG_SITE", "INVALID_SITE")
+      assertThrows[IllegalArgumentException] {
+        Client(apiKey = "api_key", appKey = "app_key")
+      }
+    }
+  }
+
+  describe("API calls") {
+
+    it("validate") {
+      val client = genTestClient(
+        url = "https://api.datadoghq.com/api/v1/validate",
+        statusCode = 200,
+        """{
+          |    "valid": true
+          |}
+        """.stripMargin.trim
+      )
+
+      assert(client.validate() == Success(true))
+    }
   }
 
 }
