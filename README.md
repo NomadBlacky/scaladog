@@ -38,5 +38,5 @@ Validate API access.
 
 ```scala
 val client = scaladog.Client()
-assert(client.validate() == scala.util.Success(true))
+assert(client.validate())
 ```

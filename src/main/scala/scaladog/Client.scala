@@ -1,8 +1,6 @@
 package scaladog
 import requests.Requester
 
-import scala.util.Try
-
 private[scaladog] class Client(
     apiKey: String,
     appKey: String,
@@ -14,7 +12,7 @@ private[scaladog] class Client(
 
   private def requester(default: Requester) = _requester.getOrElse(default)
 
-  def validate(): Try[Boolean] = Try {
+  def validate(): Boolean = {
     val response =
       requester(requests.get)
         .apply(s"$baseUrl/validate", params = Seq("api_key" -> apiKey))
