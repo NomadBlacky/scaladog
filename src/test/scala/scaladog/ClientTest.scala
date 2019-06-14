@@ -63,7 +63,7 @@ class ClientTest extends FunSpec {
         """.stripMargin.trim
       )
 
-      assert(client.validate() == Success(true))
+      assert(client.validate())
     }
   }
 
