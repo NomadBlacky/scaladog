@@ -1,5 +1,5 @@
 package scaladog
-import requests.Requester
+import requests.{Requester, Response}
 
 private[scaladog] class Client(
     apiKey: String,
@@ -17,8 +17,14 @@ private[scaladog] class Client(
       requester(requests.get)
         .apply(s"$baseUrl/validate", params = Seq("api_key" -> apiKey))
 
+    throwErrorOr(response) { res =>
+      ujson.read(res.text).obj("valid").bool
+    }
+  }
+
+  private def throwErrorOr[T](response: Response)(f: Response => T): T = {
     if (response.is2xx) {
-      ujson.read(response.text).obj("valid").bool
+      f(response)
     } else {
       val errors = ujson.read(response.text).obj("errors").arr
       throw new DatadogApiException(errors.mkString("[", ",", "]"), response)
