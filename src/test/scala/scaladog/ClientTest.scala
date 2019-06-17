@@ -4,8 +4,6 @@ import java.net.HttpCookie
 import org.scalatest.FunSpec
 import requests._
 
-import scala.util.Success
-
 class ClientTest extends FunSpec {
 
   def genTestClient(url: String, statusCode: Int, body: String) = {
@@ -64,6 +62,21 @@ class ClientTest extends FunSpec {
       )
 
       assert(client.validate())
+    }
+
+    it("serviceCheck") {
+      val client = genTestClient(
+        url = "https://api.datadoghq.com/api/v1/check_run",
+        statusCode = 200,
+        """{
+          |    "status":"ok"
+          |}
+        """.stripMargin.trim
+      )
+
+      val actual = client.serviceCheck("app.is_ok", "myhost", ServiceCheckStatus.OK)
+      val expect = PostServiceCheckResponse("ok")
+      assert(actual == expect)
     }
   }
 
