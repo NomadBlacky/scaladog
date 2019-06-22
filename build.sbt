@@ -34,3 +34,12 @@ lazy val scaladog = (project in file("."))
         pushChanges
       )
   )
+
+lazy val integrationTests = (project in file("integrationTests"))
+  .dependsOn(scaladog % "test->test;compile->compile")
+  .settings(
+    crossScalaVersions := supportedScalaVersions,
+    publishArtifact := false,
+    publish := {},
+    publishLocal := {}
+  )
