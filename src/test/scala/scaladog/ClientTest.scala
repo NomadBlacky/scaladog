@@ -80,6 +80,50 @@ class ClientTest extends FunSpec {
     }
   }
 
+  describe("Error handling") {
+    it("should throws DatadogApiException when return a JSON response") {
+      val client = genTestClient(
+        url = "https://api.datadoghq.com/api/v1/check_run",
+        statusCode = 403,
+        """{
+          |    "errors": [
+          |        "Invalid API key"
+          |    ]
+          |}
+        """.stripMargin.trim
+      )
+      val ex = intercept[DatadogApiException] {
+        client.validate()
+      }
+      assert(ex.getMessage == """403 MESSAGE: ["Invalid API key"]""")
+    }
+
+    it("should throws DatadogApiException when return a HTML response") {
+      val client = genTestClient(
+        url = "https://api.datadoghq.com/api/v1/check_run",
+        statusCode = 403,
+        """<html>
+          |    <body>
+          |        <h1>403 Forbidden</h1>
+          |Request forbidden by administrative rules.
+          |    </body>
+          |</html>
+        """.stripMargin.trim
+      )
+      val ex = intercept[DatadogApiException] {
+        client.serviceCheck("app.is_ok", "app1")
+      }
+      val expect =
+        """403 MESSAGE: <html>
+          |    <body>
+          |        <h1>403 Forbidden</h1>
+          |Request forbidden by administrative rules.
+          |    </body>
+          |</html>
+        """.stripMargin.trim
+      assert(ex.getMessage == expect)
+    }
+  }
 }
 
 class TestRequester(dummyResponse: Response) extends Requester("METHOD", Session()) {
