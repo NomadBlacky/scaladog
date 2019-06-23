@@ -3,6 +3,8 @@ import java.time.Instant
 
 import requests.{Requester, Response}
 
+import scala.util.Try
+
 private[scaladog] class Client(
     apiKey: String,
     appKey: String,
@@ -57,8 +59,12 @@ private[scaladog] class Client(
     if (response.is2xx) {
       f(response)
     } else {
-      val errors = ujson.read(response.text).obj("errors").arr
-      throw new DatadogApiException(errors.mkString("[", ",", "]"), response)
+      val errors = {
+        val errorsT = Try(ujson.read(response.text).obj("errors").arr.mkString("[", ",", "]"))
+        errorsT.getOrElse(response.text())
+      }
+      val message = s"${response.statusCode} ${response.statusMessage}: $errors"
+      throw new DatadogApiException(message, response)
     }
   }
 }
