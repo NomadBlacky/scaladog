@@ -5,12 +5,24 @@ import requests.{Requester, Response}
 
 import scala.util.Try
 
-private[scaladog] class Client(
+trait Client {
+  def validate(): Boolean
+  def serviceCheck(
+    check: String,
+    hostName: String,
+    status: ServiceCheckStatus = ServiceCheckStatus.OK,
+    timestamp: Instant = Instant.now(),
+    message: String = "",
+    tags: Iterable[(String, String)] = Iterable.empty
+  ): PostServiceCheckResponse
+}
+
+private[scaladog] class ClientImpl(
     apiKey: String,
     appKey: String,
     val site: DatadogSite,
     _requester: Option[Requester] // for unit tests
-) {
+) extends Client {
 
   private[this] val baseUrl = s"https://api.datadoghq.${site.value}/api/v1"
 
@@ -78,7 +90,7 @@ object Client {
       appKey: String = readEnv("DATADOG_APP_KEY"),
       site: DatadogSite = readEnvSite()
   ): Client =
-    new Client(apiKey, appKey, site, None)
+    new ClientImpl(apiKey, appKey, site, None)
 
   private def readEnv(key: String): String = {
     sys.env.getOrElse(

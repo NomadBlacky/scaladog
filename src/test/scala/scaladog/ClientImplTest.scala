@@ -4,7 +4,7 @@ import java.net.HttpCookie
 import org.scalatest.FunSpec
 import requests._
 
-class ClientTest extends FunSpec {
+class ClientImplTest extends FunSpec {
 
   def genTestClient(url: String, statusCode: Int, body: String) = {
     val response =
@@ -16,7 +16,7 @@ class ClientTest extends FunSpec {
         new ResponseBlob(body.getBytes("utf-8")),
         None
       )
-    new Client("api_key", "app_key", DatadogSite.US, Some(new TestRequester(response)))
+    new ClientImpl("api_key", "app_key", DatadogSite.US, Some(new TestRequester(response)))
   }
 
   describe("apply default") {
@@ -38,7 +38,7 @@ class ClientTest extends FunSpec {
     it("should use DatadogSite.US if DATADOG_SITE is not found") {
       TestUtils.removeEnv("DATADOG_SITE")
       val client = Client(apiKey = "api_key", appKey = "app_key")
-      assert(client.site == DatadogSite.US)
+      assert(client.asInstanceOf[ClientImpl].site == DatadogSite.US)
     }
 
     it("should throw IllegalArgumentException if DATADOG_SITE is invalid value") {
