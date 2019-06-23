@@ -8,12 +8,12 @@ import scala.util.Try
 trait Client {
   def validate(): Boolean
   def serviceCheck(
-    check: String,
-    hostName: String,
-    status: ServiceCheckStatus = ServiceCheckStatus.OK,
-    timestamp: Instant = Instant.now(),
-    message: String = "",
-    tags: Iterable[(String, String)] = Iterable.empty
+      check: String,
+      hostName: String,
+      status: ServiceCheckStatus = ServiceCheckStatus.OK,
+      timestamp: Instant = Instant.now(),
+      message: String = "",
+      tags: Iterable[(String, String)] = Iterable.empty
   ): PostServiceCheckResponse
 }
 
