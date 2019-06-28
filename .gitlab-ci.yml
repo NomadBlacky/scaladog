@@ -1,30 +1,31 @@
-test:
+cache:
+  paths:
+    - .sbt
+    - .ivy2
+
+.test:
   stage: test
-  image: hseeberger/scala-sbt:8u181_2.12.8_1.2.8
   script:
-    - >-
-      sbt
-      -sbt-dir .sbt
-      -ivy .ivy2
-      -mem 2048
-      +test
-  cache:
-    paths:
-      - .sbt
-      - .ivy2
+    - sbt -sbt-dir .sbt -ivy .ivy2 -mem 2048 clean +test
+
+.jdk8:
+  image: hseeberger/scala-sbt:8u181_2.12.8_1.2.8
+
+.jdk11:
+  image: hseeberger/scala-sbt:11.0.2_2.12.8_1.2.8
+
+test jdk8:
+  extends:
+    - .test
+    - .jdk8
+
+test jdk11:
+  extends:
+    - .test
+    - .jdk11
 
 scalafmt:
+  extends: .jdk8
   stage: test
-  image: hseeberger/scala-sbt:8u181_2.12.8_1.2.8
   script:
-    - >-
-      sbt
-      -sbt-dir .sbt
-      -ivy .ivy2
-      -mem 2048
-      scalafmtCheckAll
-      scalafmtSbtCheck
-  cache:
-    paths:
-      - .sbt
-      - .ivy2
+    - sbt -sbt-dir .sbt -ivy .ivy2 -mem 2048 clean scalafmtCheckAll scalafmtSbtCheck
