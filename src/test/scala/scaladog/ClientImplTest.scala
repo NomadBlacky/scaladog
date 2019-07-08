@@ -75,8 +75,7 @@ class ClientImplTest extends FunSpec {
       )
 
       val actual = client.serviceCheck("app.is_ok", "myhost", ServiceCheckStatus.OK)
-      val expect = StatusResponse("ok")
-      assert(actual == expect)
+      assert(actual.isOk)
     }
   }
 

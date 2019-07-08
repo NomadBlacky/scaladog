@@ -13,6 +13,6 @@ class ServiceChecksAPIIntegrationTest extends ClientITSpec {
       tags = List("env" -> "integration_test")
     )
 
-    assert(response.status == "ok")
+    assert(response.isOk)
   }
 }

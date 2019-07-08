@@ -90,5 +90,5 @@ val response = client.serviceCheck(
   tags = List("env" -> "prod")
 )
 
-assert(response.status == "ok")
+assert(response.isOk)
 ```
