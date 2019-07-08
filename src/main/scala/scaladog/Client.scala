@@ -14,7 +14,7 @@ trait Client {
       timestamp: Instant = Instant.now(),
       message: String = "",
       tags: Iterable[(String, String)] = Iterable.empty
-  ): PostServiceCheckResponse
+  ): StatusResponse
 }
 
 private[scaladog] class ClientImpl(
@@ -45,7 +45,7 @@ private[scaladog] class ClientImpl(
       timestamp: Instant = Instant.now(),
       message: String = "",
       tags: Iterable[(String, String)] = Iterable.empty
-  ): PostServiceCheckResponse = {
+  ): StatusResponse = {
     val bodyJson = ujson.Obj(
       "check"     -> check,
       "host_name" -> hostName,
@@ -63,7 +63,7 @@ private[scaladog] class ClientImpl(
       )
 
     throwErrorOr(response) { res =>
-      PostServiceCheckResponse(ujson.read(res.text).obj("status").str)
+      StatusResponse(ujson.read(res.text).obj("status").str)
     }
   }
 
