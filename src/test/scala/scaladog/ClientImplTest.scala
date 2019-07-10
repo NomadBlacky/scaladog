@@ -1,5 +1,7 @@
 package scaladog
 import java.net.HttpCookie
+import java.time.Instant
+import java.time.temporal.ChronoUnit
 
 import org.scalatest.FunSpec
 import requests._
@@ -76,6 +78,31 @@ class ClientImplTest extends FunSpec {
 
       val actual = client.serviceCheck("app.is_ok", "myhost", ServiceCheckStatus.OK)
       assert(actual.isOk)
+    }
+
+    it("getMetrics") {
+      val client = genTestClient(
+        url = "https://api.datadoghq.com/api/v1/check_run",
+        statusCode = 200,
+        """{
+          |    "metrics": [
+          |        "system.cpu.guest",
+          |        "system.cpu.idle",
+          |        "system.cpu.iowait"
+          |    ],
+          |    "from": "1559347200",
+          |    "host": "myhost"
+          |}
+        """.stripMargin.trim
+      )
+
+      val actual = client.getMetrics(Instant.now().minus(1, ChronoUnit.DAYS), "myhost")
+      val expect = GetMetricsResponse(
+        Seq("system.cpu.guest", "system.cpu.idle", "system.cpu.iowait"),
+        Instant.ofEpochSecond(1559347200L),
+        Some("myhost")
+      )
+      assert(actual == expect)
     }
   }
 
