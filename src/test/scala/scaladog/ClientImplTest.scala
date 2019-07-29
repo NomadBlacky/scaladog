@@ -104,6 +104,22 @@ class ClientImplTest extends FunSpec {
       )
       assert(actual == expect)
     }
+
+    it("postMetrics") {
+      val client = genTestClient(
+        url = "https://api.datadoghq.com/api/v1/series",
+        statusCode = 200,
+        """{
+          |    "status":"ok"
+          |}
+      """.stripMargin.trim
+      )
+
+      val actual = client.postMetrics(Seq.empty)
+      val expect = StatusResponse("ok")
+
+      assert(actual == expect)
+    }
   }
 
   describe("Error handling") {

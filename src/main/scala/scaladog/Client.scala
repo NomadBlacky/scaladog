@@ -16,6 +16,7 @@ trait Client {
       tags: Iterable[(String, String)] = Iterable.empty
   ): StatusResponse
   def getMetrics(from: Instant, host: String = ""): GetMetricsResponse
+  def postMetrics(series: Seq[Series]): StatusResponse
 }
 
 private[scaladog] class ClientImpl(
@@ -82,6 +83,23 @@ private[scaladog] class ClientImpl(
 
     throwErrorOr(response) { res =>
       DDPickle.read[GetMetricsResponse](res.text())
+    }
+  }
+
+  def postMetrics(series: Seq[Series]): StatusResponse = {
+    val response = requester(requests.post)
+      .apply(
+        url = s"$baseUrl/series",
+        params = Iterable(
+          "api_key"         -> apiKey,
+          "application_key" -> appKey
+        ),
+        headers = Iterable(Client.jsonHeader),
+        data = DDPickle.write(PostMetricsRequest(series))
+      )
+
+    throwErrorOr(response) { res =>
+      DDPickle.read[StatusResponse](res.text())
     }
   }
 

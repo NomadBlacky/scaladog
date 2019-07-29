@@ -5,6 +5,8 @@ import java.time.temporal.ChronoUnit
 
 import org.scalatest.Inside
 
+import scala.util.Random
+
 class MetricsAPIIntegrationTest extends ClientITSpec with Inside {
 
   test("GET /metrics") {
@@ -15,5 +17,20 @@ class MetricsAPIIntegrationTest extends ClientITSpec with Inside {
       assert(actualFrom == from)
       assert(Some(host) == actualHost)
     }
+  }
+
+  test("POST /series") {
+    val response = client.postMetrics(
+      Seq(
+        Series(
+          metric = "test.metric",
+          points = Seq(Point(Instant.now(), Random.nextInt(1000))),
+          host = "myhost",
+          tags = Seq(Tag("project:scaladog")),
+          MetricType.Gauge
+        )
+      )
+    )
+    assert(response.isOk)
   }
 }
