@@ -9,10 +9,10 @@ cache:
     - sbt -sbt-dir .sbt -ivy .ivy2 -mem 2048 clean +test
 
 .jdk8:
-  image: hseeberger/scala-sbt:8u181_2.12.8_1.2.8
+  image: hseeberger/scala-sbt:8u212_1.2.8_2.12.8
 
 .jdk11:
-  image: hseeberger/scala-sbt:11.0.2_2.12.8_1.2.8
+  image: hseeberger/scala-sbt:11.0.3_1.2.8_2.12.8
 
 test jdk8:
   extends:
