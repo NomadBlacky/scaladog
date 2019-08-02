@@ -74,7 +74,7 @@ assert(client.validate())
 
 ## Examples
 
-### Service Checks
+### [Service Checks](https://docs.datadoghq.com/api/?lang=bash#service-checks)
 
 #### [Post a check run](https://docs.datadoghq.com/api/?lang=bash#post-a-check-run)
 
@@ -90,5 +90,43 @@ val response = client.serviceCheck(
   tags = List("env" -> "prod")
 )
 
-assert(response.status == "ok")
+assert(response.isOk)
+```
+
+### [Metrics](https://docs.datadoghq.com/api/?lang=bash#metrics)
+
+#### [Get list of active metrics](https://docs.datadoghq.com/api/?lang=bash#get-list-of-active-metrics)
+
+```scala
+import java.time._, temporal._
+
+val client = scaladog.Client()
+
+val from = Instant.now().minus(1, ChronoUnit.DAYS)
+val host = "myhost"
+val response = client.getMetrics(from, host)
+
+println(response) // GetMetricsResponse(List(test.metric),2019-07-30T15:22:39Z,Some(myhost))
+```
+
+#### [Post timeseries points](https://docs.datadoghq.com/api/?lang=bash#post-timeseries-points)
+
+```scala
+import scaladog._
+import java.time.Instant
+import scala.util.Random
+
+val response = scaladog.Client().postMetrics(
+  Seq(
+    Series(
+      metric = "test.metric",
+      points = Seq(Point(Instant.now(), Random.nextInt(1000))),
+      host = "myhost",
+      tags = Seq(Tag("project:scaladog")),
+      MetricType.Gauge
+    )
+  )
+)
+
+assert(response.isOk)
 ```

@@ -14,7 +14,9 @@ trait Client {
       timestamp: Instant = Instant.now(),
       message: String = "",
       tags: Iterable[(String, String)] = Iterable.empty
-  ): PostServiceCheckResponse
+  ): StatusResponse
+  def getMetrics(from: Instant, host: String = ""): GetMetricsResponse
+  def postMetrics(series: Seq[Series]): StatusResponse
 }
 
 private[scaladog] class ClientImpl(
@@ -45,7 +47,7 @@ private[scaladog] class ClientImpl(
       timestamp: Instant = Instant.now(),
       message: String = "",
       tags: Iterable[(String, String)] = Iterable.empty
-  ): PostServiceCheckResponse = {
+  ): StatusResponse = {
     val bodyJson = ujson.Obj(
       "check"     -> check,
       "host_name" -> hostName,
@@ -63,7 +65,41 @@ private[scaladog] class ClientImpl(
       )
 
     throwErrorOr(response) { res =>
-      PostServiceCheckResponse(ujson.read(res.text).obj("status").str)
+      StatusResponse(ujson.read(res.text).obj("status").str)
+    }
+  }
+
+  def getMetrics(from: Instant, host: String = ""): GetMetricsResponse = {
+    val response = requester(requests.get)
+      .apply(
+        url = s"$baseUrl/metrics",
+        params = Iterable(
+          "api_key"         -> apiKey,
+          "application_key" -> appKey,
+          "from"            -> from.getEpochSecond.toString,
+          "host"            -> host
+        )
+      )
+
+    throwErrorOr(response) { res =>
+      DDPickle.read[GetMetricsResponse](res.text())
+    }
+  }
+
+  def postMetrics(series: Seq[Series]): StatusResponse = {
+    val response = requester(requests.post)
+      .apply(
+        url = s"$baseUrl/series",
+        params = Iterable(
+          "api_key"         -> apiKey,
+          "application_key" -> appKey
+        ),
+        headers = Iterable(Client.jsonHeader),
+        data = DDPickle.write(PostMetricsRequest(series))
+      )
+
+    throwErrorOr(response) { res =>
+      DDPickle.read[StatusResponse](res.text())
     }
   }
 
