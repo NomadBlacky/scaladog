@@ -39,6 +39,6 @@ package object scaladog {
 
   import DDPickle._
 
-  private[scaladog] implicit val instantR: Reader[Instant] =
-    reader[String].map(s => Instant.ofEpochSecond(s.toInt))
+  private[scaladog] implicit val instantRW: ReadWriter[Instant] =
+    readwriter[String].bimap(_.getEpochSecond.toString, s => Instant.ofEpochSecond(s.toInt))
 }
