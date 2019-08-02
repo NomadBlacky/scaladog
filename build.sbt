@@ -1,4 +1,4 @@
-import ReleaseTransformations._
+import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations._
 
 val Scala2_13 = "2.13.0"
 val Scala2_12 = "2.12.8"
@@ -25,6 +25,7 @@ lazy val scaladog = (project in file("."))
         runClean,
         runTest,
         setReleaseVersion,
+        ReleaseProcesses.setReleaseVersionToReadme,
         commitReleaseVersion,
         tagRelease,
         releaseStepCommandAndRemaining("+publishSigned"),
