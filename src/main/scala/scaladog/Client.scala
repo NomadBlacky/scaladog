@@ -13,8 +13,9 @@ trait Client {
       status: ServiceCheckStatus = ServiceCheckStatus.OK,
       timestamp: Instant = Instant.now(),
       message: String = "",
-      tags: Iterable[(String, String)] = Iterable.empty
+      tags: Iterable[Tag] = Iterable.empty
   ): StatusResponse
+  def serviceCheck(request: ServiceCheckRequest): StatusResponse
   def getMetrics(from: Instant, host: String = ""): GetMetricsResponse
   def postMetrics(series: Seq[Series]): StatusResponse
 }
@@ -46,22 +47,17 @@ private[scaladog] class ClientImpl(
       status: ServiceCheckStatus = ServiceCheckStatus.OK,
       timestamp: Instant = Instant.now(),
       message: String = "",
-      tags: Iterable[(String, String)] = Iterable.empty
-  ): StatusResponse = {
-    val bodyJson = ujson.Obj(
-      "check"     -> check,
-      "host_name" -> hostName,
-      "status"    -> status.value,
-      "timestamp" -> timestamp.getEpochSecond,
-      "message"   -> message,
-      "tags"      -> tags.map { case (key, value) => s"$key:$value" }
-    )
+      tags: Iterable[Tag] = Iterable.empty
+  ): StatusResponse =
+    serviceCheck(ServiceCheckRequest(check, hostName, status, timestamp, message, tags))
+
+  def serviceCheck(request: ServiceCheckRequest): StatusResponse = {
     val response = requester(requests.post)
       .apply(
         url = s"$baseUrl/check_run",
         params = Seq("api_key" -> apiKey),
         headers = Iterable(Client.jsonHeader),
-        data = ujson.write(bodyJson)
+        data = DDPickle.write(request)
       )
 
     throwErrorOr(response) { res =>
