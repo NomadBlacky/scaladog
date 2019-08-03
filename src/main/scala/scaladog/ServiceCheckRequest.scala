@@ -2,7 +2,7 @@ package scaladog
 
 import java.time.Instant
 
-case class ServiceCheckRequest(
+private[scaladog] case class ServiceCheckRequest(
     check: String,
     hostName: String,
     status: ServiceCheckStatus,
