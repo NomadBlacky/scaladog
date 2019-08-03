@@ -9,7 +9,7 @@ object ReleaseProcesses {
       val (releaseVersion, _) = state.get(ReleaseKeys.versions).getOrElse(sys.error("No versions are set!"))
       val newReadme = os
         .read(os.pwd / "README.md")
-        .lines
+        .linesIterator
         .map {
           case sbtRegex(grp, art, _) => s"""libraryDependencies += "$grp" %% "$art" % "$releaseVersion""""
           case ammRegex(grp, art, _) => s"""import $$ivy.`$grp::$art:$releaseVersion`"""
