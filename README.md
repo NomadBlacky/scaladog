@@ -63,6 +63,12 @@ assert(client.validate())
 + [ ] Logs Indexes
 + [ ] Metrics
 + [ ] Monitors
+  + [x] `GET /v1/metrics`
+  + [x] `POST /v1/series`
+  + [ ] `GET /v1/query`
+  + [ ] `GET /v1/metrics/<METRIC_NAME>`
+  + [ ] `PUT /v1/metrics/<METRIC_NAME>`
+  + [ ] `GET /v1/search`
 + [ ] Organizations
 + [ ] Screenboards
 + [ ] Synthetics
@@ -130,3 +136,20 @@ val response = scaladog.Client().postMetrics(
 
 assert(response.isOk)
 ```
+
+## Changelog
+
+### 0.2.0
+
++ Support part of Metrics API (#9)
+  + `GET /v1/metrics`
+  + `POST /v1/series`
+
+### 0.1.0
+
++ Support Service Checks API (#2)
+  + `POST /v1/check_run`
+
+### 0.0.1
+
++ First Release
