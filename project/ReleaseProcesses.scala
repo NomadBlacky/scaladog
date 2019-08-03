@@ -6,6 +6,7 @@ object ReleaseProcesses {
 
   lazy val setReleaseVersionToReadme: ReleaseStep = ReleaseStep(
     state => {
+      state.log.info("Replace library versions in README.md ...")
       val (releaseVersion, _) = state.get(ReleaseKeys.versions).getOrElse(sys.error("No versions are set!"))
       val newReadme = os
         .read(os.pwd / "README.md")
@@ -17,6 +18,7 @@ object ReleaseProcesses {
         }
         .mkString("\n")
       os.write.over(os.pwd / "README.md", newReadme)
+      state.log.info("Done replacing.")
       state
     }
   )
