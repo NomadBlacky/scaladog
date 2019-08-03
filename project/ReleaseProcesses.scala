@@ -16,9 +16,17 @@ object ReleaseProcesses {
           case ammRegex(grp, art, _) => s"""import $$ivy.`$grp::$art:$releaseVersion`"""
           case line                  => line
         }
-        .mkString("\n")
+        .mkString("", "\n", "\n")
       os.write.over(os.pwd / "README.md", newReadme)
       state.log.info("Done replacing.")
+
+      state.log.info("Execute `git add README.md` ...")
+      val result = os.proc("git", "add", "README.md").call()
+      if (result.exitCode != 0) {
+        throw sys.error(result.err.string)
+      }
+      state.log.info("Added README.md")
+
       state
     }
   )
