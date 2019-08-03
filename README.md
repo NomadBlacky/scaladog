@@ -128,7 +128,7 @@ val response = scaladog.Client().postMetrics(
       metric = "test.metric",
       points = Seq(Point(Instant.now(), Random.nextInt(1000))),
       host = "myhost",
-      tags = Seq("project:scaladog"),
+      tags = Seq(Tag("project:scaladog")),
       MetricType.Gauge
     )
   )
