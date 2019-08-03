@@ -24,3 +24,13 @@ object Tag {
   implicit val readwriter: DDPickle.ReadWriter[Tag] =
     DDPickle.readwriter[String].bimap(_.asString, apply)
 }
+
+trait Taggable[T] {
+  def asTag(value: T): Tag
+}
+
+object Taggable {
+  implicit val tagTaggable: Taggable[Tag]                = identity[Tag]
+  implicit val stringTaggable: Taggable[String]          = Tag(_)
+  implicit val tupleTaggable: Taggable[(String, String)] = t => Tag.KeyValue(t._1, t._2)
+}

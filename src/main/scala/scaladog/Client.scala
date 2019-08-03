@@ -7,15 +7,21 @@ import scala.util.Try
 
 trait Client {
   def validate(): Boolean
-  def serviceCheck(
+  def serviceCheckWithoutTags(
       check: String,
       hostName: String,
       status: ServiceCheckStatus = ServiceCheckStatus.OK,
       timestamp: Instant = Instant.now(),
-      message: String = "",
-      tags: Iterable[Tag] = Iterable.empty
+      message: String = ""
   ): StatusResponse
-  def serviceCheck(request: ServiceCheckRequest): StatusResponse
+  def serviceCheck[T: Taggable](
+      check: String,
+      hostName: String,
+      tags: Iterable[T],
+      status: ServiceCheckStatus = ServiceCheckStatus.OK,
+      timestamp: Instant = Instant.now(),
+      message: String = ""
+  ): StatusResponse
   def getMetrics(from: Instant, host: String = ""): GetMetricsResponse
   def postMetrics(series: Seq[Series]): StatusResponse
 }
@@ -41,17 +47,31 @@ private[scaladog] class ClientImpl(
     }
   }
 
-  def serviceCheck(
+  def serviceCheckWithoutTags(
       check: String,
       hostName: String,
       status: ServiceCheckStatus = ServiceCheckStatus.OK,
       timestamp: Instant = Instant.now(),
-      message: String = "",
-      tags: Iterable[Tag] = Iterable.empty
-  ): StatusResponse =
-    serviceCheck(ServiceCheckRequest(check, hostName, status, timestamp, message, tags))
+      message: String = ""
+  ): StatusResponse = {
+    val request = ServiceCheckRequest(check, hostName, status, timestamp, message, Iterable.empty)
+    serviceCheck(request)
+  }
 
-  def serviceCheck(request: ServiceCheckRequest): StatusResponse = {
+  def serviceCheck[T: Taggable](
+      check: String,
+      hostName: String,
+      tags: Iterable[T],
+      status: ServiceCheckStatus = ServiceCheckStatus.OK,
+      timestamp: Instant = Instant.now(),
+      message: String = ""
+  ): StatusResponse = {
+    val request =
+      ServiceCheckRequest(check, hostName, status, timestamp, message, tags.map(implicitly[Taggable[T]].asTag))
+    serviceCheck(request)
+  }
+
+  private def serviceCheck(request: ServiceCheckRequest): StatusResponse = {
     val response = requester(requests.post)
       .apply(
         url = s"$baseUrl/check_run",

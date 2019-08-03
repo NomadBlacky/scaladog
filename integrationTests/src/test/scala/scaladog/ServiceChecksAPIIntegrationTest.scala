@@ -10,7 +10,7 @@ class ServiceChecksAPIIntegrationTest extends ClientITSpec {
       hostName = "app",
       status = scaladog.ServiceCheckStatus.OK,
       timestamp = Instant.now(),
-      tags = List(Tag("env:integration_test"))
+      tags = List("env:integration_test", "project:scaladog")
     )
 
     assert(response.isOk)
