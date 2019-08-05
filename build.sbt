@@ -9,7 +9,20 @@ ThisBuild / scalaVersion := Scala2_13
 ThisBuild / organization := "dev.nomadblacky"
 ThisBuild / organizationName := "NomadBlacky"
 
+lazy val commonSettings = Seq(
+  scalacOptions ++= Seq(
+      "-deprecation",
+      "-feature",
+      "-unchecked",
+      "-Xlint",
+      "-Xfatal-warnings",
+      "-Ywarn-dead-code",
+      "-Ywarn-numeric-widen"
+    )
+)
+
 lazy val scaladog = (project in file("."))
+  .settings(commonSettings)
   .settings(
     name := "scaladog",
     crossScalaVersions := supportedScalaVersions,
@@ -38,6 +51,7 @@ lazy val scaladog = (project in file("."))
 
 lazy val integrationTests = (project in file("integrationTests"))
   .dependsOn(scaladog % "test->test;compile->compile")
+  .settings(commonSettings)
   .settings(
     crossScalaVersions := supportedScalaVersions,
     publishArtifact := false,

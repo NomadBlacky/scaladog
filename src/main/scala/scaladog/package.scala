@@ -10,8 +10,8 @@ package object scaladog {
       s.split("(?=[A-Z])", -1).map(_.toLowerCase).mkString("_")
     }
     private def snakeToCamel(s: String) = {
-      val res = s.split("_", -1).map(x => x(0).toUpper + x.drop(1)).mkString
-      s(0).toLower + res.drop(1)
+      val res = s.split("_", -1).map(x => s"${x(0).toUpper}${x.drop(1)}").mkString
+      s"${s(0).toLower}${res.drop(1)}"
     }
 
     override def objectAttributeKeyReadMap(s: CharSequence): String =
@@ -40,5 +40,5 @@ package object scaladog {
   import DDPickle._
 
   private[scaladog] implicit val instantRW: ReadWriter[Instant] =
-    readwriter[String].bimap(_.getEpochSecond.toString, s => Instant.ofEpochSecond(s.toInt))
+    readwriter[String].bimap(_.getEpochSecond.toString, s => Instant.ofEpochSecond(s.toLong))
 }

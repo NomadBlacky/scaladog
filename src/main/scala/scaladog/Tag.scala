@@ -25,6 +25,7 @@ object Tag {
     DDPickle.readwriter[String].bimap(_.asString, apply)
 }
 
+@FunctionalInterface
 trait Taggable[T] {
   def asTag(value: T): Tag
 }
