@@ -1,6 +1,6 @@
 package scaladog
 
-import org.scalatest.{FunSpec, FunSuite}
+import org.scalatest.FunSpec
 
 class DatadogSiteTest extends FunSpec {
 
