@@ -26,7 +26,7 @@ class MetricsAPIIntegrationTest extends ClientITSpec with Inside {
           metric = "test.metric",
           points = Seq(Point(Instant.now(), Random.nextInt(1000))),
           host = "myhost",
-          tags = Seq(Tag("project:scaladog")),
+          tags = Seq("project:scaladog"),
           MetricType.Gauge
         )
       )

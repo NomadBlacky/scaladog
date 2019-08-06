@@ -8,9 +8,9 @@ private[scaladog] case class ServiceCheckRequest(
     status: ServiceCheckStatus,
     timestamp: Instant,
     message: String,
-    tags: Iterable[Tag]
+    tags: Seq[String]
 )
 
-object ServiceCheckRequest {
+private[scaladog] object ServiceCheckRequest {
   implicit val writer: DDPickle.Writer[ServiceCheckRequest] = DDPickle.macroW
 }
