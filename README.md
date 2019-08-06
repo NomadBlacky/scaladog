@@ -62,13 +62,13 @@ assert(client.validate())
 + [ ] Logs
 + [ ] Logs Indexes
 + [ ] Metrics
-+ [ ] Monitors
   + [x] `GET /v1/metrics`
   + [x] `POST /v1/series`
   + [ ] `GET /v1/query`
   + [ ] `GET /v1/metrics/<METRIC_NAME>`
   + [ ] `PUT /v1/metrics/<METRIC_NAME>`
   + [ ] `GET /v1/search`
++ [ ] Monitors
 + [ ] Organizations
 + [ ] Screenboards
 + [ ] Synthetics
