@@ -7,20 +7,13 @@ import scala.util.Try
 
 trait Client {
   def validate(): Boolean
-  def serviceCheckWithoutTags(
+  def serviceCheck(
       check: String,
       hostName: String,
       status: ServiceCheckStatus = ServiceCheckStatus.OK,
       timestamp: Instant = Instant.now(),
-      message: String = ""
-  ): StatusResponse
-  def serviceCheck[T: Taggable](
-      check: String,
-      hostName: String,
-      tags: Iterable[T],
-      status: ServiceCheckStatus = ServiceCheckStatus.OK,
-      timestamp: Instant = Instant.now(),
-      message: String = ""
+      message: String = "",
+      tags: Seq[String] = Seq.empty
   ): StatusResponse
   def getMetrics(from: Instant, host: String = ""): GetMetricsResponse
   def postMetrics(series: Seq[Series]): StatusResponse
@@ -47,27 +40,16 @@ private[scaladog] class ClientImpl(
     }
   }
 
-  def serviceCheckWithoutTags(
+  def serviceCheck(
       check: String,
       hostName: String,
       status: ServiceCheckStatus = ServiceCheckStatus.OK,
       timestamp: Instant = Instant.now(),
-      message: String = ""
-  ): StatusResponse = {
-    val request = ServiceCheckRequest(check, hostName, status, timestamp, message, Iterable.empty)
-    serviceCheck(request)
-  }
-
-  def serviceCheck[T: Taggable](
-      check: String,
-      hostName: String,
-      tags: Iterable[T],
-      status: ServiceCheckStatus = ServiceCheckStatus.OK,
-      timestamp: Instant = Instant.now(),
-      message: String = ""
+      message: String = "",
+      tags: Seq[String] = Seq.empty
   ): StatusResponse = {
     val request =
-      ServiceCheckRequest(check, hostName, status, timestamp, message, tags.map(implicitly[Taggable[T]].asTag))
+      ServiceCheckRequest(check, hostName, status, timestamp, message, tags)
     serviceCheck(request)
   }
 

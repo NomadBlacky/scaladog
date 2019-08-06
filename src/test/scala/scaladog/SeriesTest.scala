@@ -14,7 +14,7 @@ class SeriesTest extends FunSpec {
           Point(Instant.ofEpochSecond(1559347200L), 10.5)
         ),
         host = "myhost",
-        tags = Seq(Tag("key:value")),
+        tags = Seq("key:value"),
         metricType = MetricType.Rate
       )
       val actual = DDPickle.write(series, 2)

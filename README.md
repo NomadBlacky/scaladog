@@ -90,10 +90,10 @@ val client = scaladog.Client()
 val response = client.serviceCheck(
   check = "app.is_ok",
   hostName = "app1",
-  tags = List("env" -> "prod"), // or List("env:prod")
   status = scaladog.ServiceCheckStatus.OK,
   timestamp = java.time.Instant.now(),
-  message = "The application is healthy."
+  message = "The application is healthy.",
+  tags = Seq("env:prod")
 )
 
 assert(response.isOk)
@@ -128,7 +128,7 @@ val response = scaladog.Client().postMetrics(
       metric = "test.metric",
       points = Seq(Point(Instant.now(), Random.nextInt(1000))),
       host = "myhost",
-      tags = Seq(Tag("project:scaladog")),
+      tags = Seq("project:scaladog"),
       MetricType.Gauge
     )
   )

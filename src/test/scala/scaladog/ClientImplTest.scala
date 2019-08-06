@@ -76,7 +76,7 @@ class ClientImplTest extends FunSpec {
         """.stripMargin.trim
       )
 
-      val actual = client.serviceCheck("app.is_ok", "myhost", Seq("project:scaladog"))
+      val actual = client.serviceCheck(check = "app.is_ok", hostName = "myhost", tags = Seq("project:scaladog"))
       assert(actual.isOk)
     }
 
@@ -153,7 +153,7 @@ class ClientImplTest extends FunSpec {
         """.stripMargin.trim
       )
       val ex = intercept[DatadogApiException] {
-        client.serviceCheck("app.is_ok", "app1", Seq("project" -> "scaladog"))
+        client.serviceCheck(check = "app.is_ok", hostName = "app1", tags = Seq("project:scaladog"))
       }
       val expect =
         """403 MESSAGE: <html>

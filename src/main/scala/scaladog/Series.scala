@@ -6,7 +6,7 @@ case class Series(
     metric: String,
     points: Seq[Point],
     host: String = "",
-    tags: Seq[Tag] = Seq.empty,
+    tags: Seq[String] = Seq.empty,
     @upickle.implicits.key("type") metricType: MetricType = MetricType.Gauge
 )
 
