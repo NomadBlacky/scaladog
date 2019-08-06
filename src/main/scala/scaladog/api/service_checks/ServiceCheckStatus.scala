@@ -1,4 +1,6 @@
-package scaladog
+package scaladog.api.service_checks
+
+import scaladog.DDPickle
 
 sealed abstract class ServiceCheckStatus(val value: Int)
 

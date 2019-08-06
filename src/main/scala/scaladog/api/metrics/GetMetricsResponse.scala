@@ -1,8 +1,8 @@
-package scaladog
+package scaladog.api.metrics
 
 import java.time.Instant
 
-import DDPickle._
+import scaladog.DDPickle
 
 case class GetMetricsResponse(
     metrics: Seq[String],
@@ -11,5 +11,5 @@ case class GetMetricsResponse(
 )
 
 object GetMetricsResponse {
-  implicit val reader: Reader[GetMetricsResponse] = macroR
+  implicit val reader: DDPickle.Reader[GetMetricsResponse] = DDPickle.macroR
 }

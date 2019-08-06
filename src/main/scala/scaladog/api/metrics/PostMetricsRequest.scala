@@ -1,4 +1,6 @@
-package scaladog
+package scaladog.api.metrics
+
+import scaladog.DDPickle
 
 private[scaladog] case class PostMetricsRequest(series: Seq[Series])
 

@@ -2,6 +2,8 @@ package scaladog
 import java.time.Instant
 
 import requests.{Requester, Response}
+import scaladog.api.metrics.{GetMetricsResponse, PostMetricsRequest, Series}
+import scaladog.api.service_checks.{ServiceCheckRequest, ServiceCheckStatus}
 
 import scala.util.Try
 

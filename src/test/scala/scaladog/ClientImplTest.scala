@@ -5,6 +5,7 @@ import java.time.temporal.ChronoUnit
 
 import org.scalatest.FunSpec
 import requests._
+import scaladog.api.metrics.GetMetricsResponse
 
 class ClientImplTest extends FunSpec {
 

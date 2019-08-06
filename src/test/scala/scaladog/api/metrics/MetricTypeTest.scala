@@ -1,6 +1,7 @@
-package scaladog
+package scaladog.api.metrics
 
 import org.scalatest.FunSpec
+import scaladog.DDPickle
 
 class MetricTypeTest extends FunSpec {
 
