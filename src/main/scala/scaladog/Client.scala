@@ -1,22 +1,12 @@
 package scaladog
 import java.time.Instant
 
-import requests.{Requester, Response}
+import requests.Requester
 import scaladog.api.metrics.{GetMetricsResponse, PostMetricsRequest, Series}
 import scaladog.api.service_checks.{ServiceCheckRequest, ServiceCheckStatus}
 
-import scala.util.Try
-
 trait Client {
   def validate(): Boolean
-  def serviceCheck(
-      check: String,
-      hostName: String,
-      status: ServiceCheckStatus = ServiceCheckStatus.OK,
-      timestamp: Instant = Instant.now(),
-      message: String = "",
-      tags: Seq[String] = Seq.empty
-  ): StatusResponse
   def getMetrics(from: Instant, host: String = ""): GetMetricsResponse
   def postMetrics(series: Seq[Series]): StatusResponse
 }
@@ -102,24 +92,9 @@ private[scaladog] class ClientImpl(
       DDPickle.read[StatusResponse](res.text())
     }
   }
-
-  private def throwErrorOr[T](response: Response)(f: Response => T): T = {
-    if (response.is2xx) {
-      f(response)
-    } else {
-      val errors = {
-        val errorsT = Try(ujson.read(response.text).obj("errors").arr.mkString("[", ",", "]"))
-        errorsT.getOrElse(response.text())
-      }
-      val message = s"${response.statusCode} ${response.statusMessage}: $errors"
-      throw new DatadogApiException(message, response)
-    }
-  }
 }
 
 object Client {
-
-  private[scaladog] val jsonHeader = "Content-Type" -> "application/json"
 
   def apply(
       apiKey: String = readEnv("DATADOG_API_KEY"),
