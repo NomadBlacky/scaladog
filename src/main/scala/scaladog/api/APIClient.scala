@@ -1,31 +1,26 @@
 package scaladog.api
 
-import requests.{RequestBlob, Requester, Response}
-import scaladog.DDPickle._
-import scaladog.{DatadogApiException, DatadogSite}
+import requests.{RequestBlob, Requester}
+import scaladog.api.DDPickle._
 
 import scala.util.Try
 
 trait APIClient {
-  val apiKey: String
-  val appKey: String
-  val site: DatadogSite
+  protected def apiKey: String
+  protected def appKey: String
+  def site: DatadogSite
+  protected def _requester: Option[Requester] // for unit tests
 
-  private val defaultParams  = Seq("api_key"      -> apiKey, "application_key" -> appKey)
+  private def defaultParams  = Seq("api_key"      -> apiKey, "application_key" -> appKey)
   private val defaultHeaders = Seq("Content-Type" -> "application/json")
 
-  protected val baseUrl = s"https://api.datadoghq.${site.value}/api/v1"
-
-  /**
-    * for unit tests
-    */
-  protected val _requester: Option[Requester]
+  protected def baseUrl = s"https://api.datadoghq.${site.value}/api/v1"
 
   protected def httpGet[Res: Reader](path: String, params: Seq[(String, String)]): Res =
-    request(_requester.getOrElse(requests.get), path, params, RequestBlob.EmptyRequestBlob)
+    request[Res](_requester.getOrElse(requests.get), path, params, RequestBlob.EmptyRequestBlob)
 
   protected def httpPost[Req: Writer, Res: Reader](path: String, data: Req): Res =
-    request(_requester.getOrElse(requests.post), path, Seq.empty, write(data))
+    request[Res](_requester.getOrElse(requests.post), path, Seq.empty, write(data))
 
   private def request[Res: Reader](
       requester: Requester,

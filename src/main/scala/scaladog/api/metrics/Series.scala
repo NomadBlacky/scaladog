@@ -2,7 +2,7 @@ package scaladog.api.metrics
 
 import java.time.Instant
 
-import scaladog.DDPickle
+import scaladog.api.DDPickle
 
 case class Series(
     metric: String,
@@ -19,6 +19,6 @@ object Series {
 case class Point(timestamp: Instant, value: BigDecimal)
 
 object Point {
-    implicit val writer: DDPickle.Writer[Point] =
-        DDPickle.writer[ujson.Arr].comap(p => ujson.Arr(p.timestamp.getEpochSecond, p.value.toString()))
+  implicit val writer: DDPickle.Writer[Point] =
+    DDPickle.writer[ujson.Arr].comap(p => ujson.Arr(p.timestamp.getEpochSecond, p.value.toString()))
 }

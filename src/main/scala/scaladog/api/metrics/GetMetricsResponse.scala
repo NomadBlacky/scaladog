@@ -2,7 +2,7 @@ package scaladog.api.metrics
 
 import java.time.Instant
 
-import scaladog.DDPickle
+import scaladog.api.DDPickle
 
 case class GetMetricsResponse(
     metrics: Seq[String],

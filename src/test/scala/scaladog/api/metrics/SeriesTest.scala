@@ -3,7 +3,7 @@ package scaladog.api.metrics
 import java.time.Instant
 
 import org.scalatest.FunSpec
-import scaladog.DDPickle
+import scaladog.api.DDPickle
 
 class SeriesTest extends FunSpec {
 

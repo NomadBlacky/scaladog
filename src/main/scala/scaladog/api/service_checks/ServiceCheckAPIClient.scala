@@ -3,8 +3,7 @@ package scaladog.api.service_checks
 import java.time.Instant
 
 import requests.Requester
-import scaladog.api.{APIClient, APIClientFactory}
-import scaladog.{DatadogSite, StatusResponse}
+import scaladog.api.{APIClient, APIClientFactory, DatadogSite, StatusResponse}
 
 trait ServiceCheckAPIClient extends APIClient {
   def serviceCheck(
@@ -36,5 +35,8 @@ private[service_checks] final case class ServiceCheckAPIClientImpl(
       message: String,
       tags: Seq[String]
   ): StatusResponse =
-    httpPost("/check_run", ServiceCheckRequest(check, hostName, status, timestamp, message, tags))
+    httpPost[ServiceCheckRequest, StatusResponse](
+      "/check_run",
+      ServiceCheckRequest(check, hostName, status, timestamp, message, tags)
+    )
 }
