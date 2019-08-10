@@ -1,25 +1,20 @@
 package scaladog.api.metrics
 
+import enumeratum.EnumEntry.Snakecase
+import enumeratum.{Enum, EnumEntry}
 import scaladog.api.DDPickle
 
-sealed abstract class MetricType(val name: String) {
-  def asMetricType: MetricType = this
-}
+import scala.collection.immutable.IndexedSeq
 
-object MetricType {
-  case object Gauge extends MetricType("gauge")
-  case object Rate  extends MetricType("rate")
-  case object Count extends MetricType("count")
+sealed abstract class MetricType extends EnumEntry with Snakecase
 
-  val all: Set[MetricType] = Set(Gauge, Rate, Count)
+object MetricType extends Enum[MetricType] {
+  val values: IndexedSeq[MetricType] = findValues
 
-  def fromString(str: String): Option[MetricType] = all.find(_.name == str)
+  case object Gauge extends MetricType
+  case object Rate  extends MetricType
+  case object Count extends MetricType
 
   implicit def readwriter: DDPickle.ReadWriter[MetricType] =
-    DDPickle
-      .readwriter[String]
-      .bimap(
-        _.name,
-        s => fromString(s).getOrElse(throw new IllegalArgumentException(s"Invalid MetricType: $s"))
-      )
+    DDPickle.readwriter[String].bimap(_.entryName, withName)
 }
