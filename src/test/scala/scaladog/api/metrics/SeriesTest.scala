@@ -1,8 +1,9 @@
-package scaladog
+package scaladog.api.metrics
 
 import java.time.Instant
 
 import org.scalatest.FunSpec
+import scaladog.api.DDPickle
 
 class SeriesTest extends FunSpec {
 

@@ -1,8 +1,8 @@
-package scaladog
+package scaladog.api
 
-import org.scalatest.FunSpec
+import scaladog.ScaladogUnitTest
 
-class DatadogSiteTest extends FunSpec {
+class DatadogSiteTest extends ScaladogUnitTest {
 
   describe("fromString") {
 

@@ -1,4 +1,6 @@
-package scaladog
+package scaladog.api.metrics
+
+import scaladog.api.DDPickle
 
 sealed abstract class MetricType(val name: String) {
   def asMetricType: MetricType = this

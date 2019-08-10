@@ -1,6 +1,8 @@
-package scaladog
+package scaladog.api.metrics
 
 import java.time.Instant
+
+import scaladog.api.DDPickle
 
 case class Series(
     metric: String,

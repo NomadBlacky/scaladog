@@ -1,4 +1,4 @@
-package scaladog
+package scaladog.api
 
 case class StatusResponse(status: String) {
   val isOk: Boolean = status.toLowerCase == "ok"

@@ -1,6 +1,8 @@
-package scaladog
+package scaladog.api.service_checks
 
 import java.time.Instant
+
+import scaladog.api.DDPickle
 
 private[scaladog] case class ServiceCheckRequest(
     check: String,

@@ -1,6 +1,6 @@
-package scaladog
+package scaladog.api
 
-private[scaladog] sealed abstract class DatadogSite(val value: String)
+sealed abstract class DatadogSite(val value: String)
 
 object DatadogSite {
   case object US extends DatadogSite("com")
