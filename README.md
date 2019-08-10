@@ -83,7 +83,7 @@ import java.time.Instant
 
 val client = scaladog.Client()
 
-val response = client.serviceCheck.serviceCheck(
+val response = client.serviceCheck.postStatus(
   check = "app.is_ok",
   hostName = "app1",
   status = ServiceCheckStatus.OK,

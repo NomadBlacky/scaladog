@@ -7,7 +7,7 @@ import scaladog.ClientITSpec
 class ServiceChecksAPIIntegrationTest extends ClientITSpec {
 
   test("post") {
-    val response = client.serviceCheck.serviceCheck(
+    val response = client.serviceCheck.postStatus(
       check = "app.is_ok",
       hostName = "app",
       status = ServiceCheckStatus.OK,

@@ -22,7 +22,7 @@ class ServiceCheckAPIClientImplTest extends FunSpec with ScaladogUnitTest {
         Some(requester)
       )
 
-      val actual = client.serviceCheck(check = "app.is_ok", hostName = "myhost", tags = Seq("project:scaladog"))
+      val actual = client.postStatus(check = "app.is_ok", hostName = "myhost", tags = Seq("project:scaladog"))
       assert(actual.isOk)
     }
   }

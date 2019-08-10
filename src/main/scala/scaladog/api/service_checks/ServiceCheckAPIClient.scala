@@ -6,7 +6,7 @@ import requests.Requester
 import scaladog.api.{APIClient, APIClientFactory, DatadogSite, StatusResponse}
 
 trait ServiceCheckAPIClient extends APIClient {
-  def serviceCheck(
+  def postStatus(
       check: String,
       hostName: String,
       status: ServiceCheckStatus = ServiceCheckStatus.OK,
@@ -27,7 +27,7 @@ private[service_checks] final case class ServiceCheckAPIClientImpl(
     site: DatadogSite,
     _requester: Option[Requester] = None
 ) extends ServiceCheckAPIClient {
-  override def serviceCheck(
+  override def postStatus(
       check: String,
       hostName: String,
       status: ServiceCheckStatus,
