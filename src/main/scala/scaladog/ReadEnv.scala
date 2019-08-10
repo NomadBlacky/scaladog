@@ -15,7 +15,7 @@ trait ReadEnv {
       .get("DATADOG_SITE")
       .map { env =>
         DatadogSite
-          .fromString(env)
+          .withNameInsensitiveOption(env)
           .getOrElse(
             throw new IllegalArgumentException(
               s"scaladog initialization failed: Unsupported site $env"

@@ -14,7 +14,7 @@ trait APIClient {
   private def defaultParams  = Seq("api_key"      -> apiKey, "application_key" -> appKey)
   private val defaultHeaders = Seq("Content-Type" -> "application/json")
 
-  protected def baseUrl = s"https://api.datadoghq.${site.value}/api/v1"
+  protected def baseUrl = s"https://api.datadoghq.${site.domain}/api/v1"
 
   protected def httpGet[Res: Reader](path: String, params: Seq[(String, String)]): Res =
     request[Res](_requester.getOrElse(requests.get), path, params, RequestBlob.EmptyRequestBlob)
