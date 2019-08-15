@@ -19,6 +19,8 @@ trait EventsAPIClient extends APIClient {
       relatedEventId: Long = 0,
       deviceName: String = ""
   ): PostEventResponse
+
+  def getEvent(id: Long): Event
 }
 
 object EventsAPIClient extends APIClientFactory[EventsAPIClient] {
@@ -60,4 +62,6 @@ private[events] class EventsAPIClientImpl(
     )
     httpPost[PostEventRequest, PostEventResponse]("/events", request)
   }
+
+  def getEvent(id: Long): Event = httpGet[GetEventResponse](s"/events/$id").event
 }

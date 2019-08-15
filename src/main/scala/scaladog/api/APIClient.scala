@@ -16,7 +16,7 @@ trait APIClient {
 
   protected def baseUrl = s"https://api.datadoghq.${site.domain}/api/v1"
 
-  protected def httpGet[Res: Reader](path: String, params: Seq[(String, String)]): Res =
+  protected def httpGet[Res: Reader](path: String, params: Seq[(String, String)] = Seq.empty): Res =
     request[Res](_requester.getOrElse(requests.get), path, params, RequestBlob.EmptyRequestBlob)
 
   protected def httpPost[Req: Writer, Res: Reader](path: String, data: Req): Res =

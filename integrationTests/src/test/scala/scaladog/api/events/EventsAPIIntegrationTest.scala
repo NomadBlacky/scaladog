@@ -17,4 +17,24 @@ class EventsAPIIntegrationTest extends ClientITSpec {
     )
     assert(response.isOk)
   }
+
+  test("GET /events/<EVENT_ID>") {
+    val actual = client.events.getEvent(5052730002120180683L)
+    val expect = Event(
+      id = 5052730002120180683L,
+      text = "# This is a test event.\n\n+ hoge\n+ foo",
+      dateHappened = Instant.ofEpochSecond(1565429042L),
+      title = Some("TEST EVENT"),
+      alertType = AlertType.UserUpdate,
+      priority = Priority.Normal,
+      host = None,
+      tags = Some(Seq("project:scaladog")),
+      aggregationKey = None,
+      sourceTypeName = None,
+      relatedEventId = None,
+      deviceName = None
+    )
+
+    assert(actual == expect)
+  }
 }
