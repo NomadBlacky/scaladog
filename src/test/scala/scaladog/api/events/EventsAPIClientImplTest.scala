@@ -81,4 +81,82 @@ class EventsAPIClientImplTest extends ScaladogUnitTest {
 
     assert(actual == expect)
   }
+
+  it("query") {
+    val requester = genTestRequester(
+      url = "https://api.datadoghq.com/api/v1/events",
+      statusCode = 200,
+      body = """{
+               |  "events": [
+               |    {
+               |      "date_happened": 1565429042,
+               |      "alert_type": "user_update",
+               |      "resource": "/api/v1/events/5052730002120180683",
+               |      "title": "TEST EVENT",
+               |      "url": "/event/event?id=5052730002120180683",
+               |      "text": "# This is a test event.\n\n+ hoge\n+ foo",
+               |      "tags": [
+               |        "project:scaladog"
+               |      ],
+               |      "device_name": null,
+               |      "priority": "normal",
+               |      "host": null,
+               |      "id": 5052730002120180683 
+               |    },
+               |    {
+               |      "date_happened": 1565429043,
+               |      "alert_type": "info",
+               |      "resource": "/api/v1/events/5052730002120180684",
+               |      "title": "TEST EVENT 2",
+               |      "url": "/event/event?id=5052730002120180684",
+               |      "text": "# This is a test event 2.",
+               |      "tags": [
+               |        "project:scaladog"
+               |      ],
+               |      "device_name": null,
+               |      "priority": "low",
+               |      "host": null,
+               |      "id": 5052730002120180684
+               |    }
+               |  ]
+               |}
+             """.stripMargin.trim
+    )
+
+    val client = new EventsAPIClientImpl(apiKey, appKey, site, Some(requester))
+
+    val actual = client.query(Instant.now(), Instant.now())
+    val expect = Seq(
+      Event(
+        id = 5052730002120180683L,
+        text = "# This is a test event.\n\n+ hoge\n+ foo",
+        dateHappened = Instant.ofEpochSecond(1565429042L),
+        title = Some("TEST EVENT"),
+        alertType = AlertType.UserUpdate,
+        priority = Priority.Normal,
+        host = None,
+        tags = Some(Seq("project:scaladog")),
+        aggregationKey = None,
+        sourceTypeName = None,
+        relatedEventId = None,
+        deviceName = None
+      ),
+      Event(
+        id = 5052730002120180684L,
+        text = "# This is a test event 2.",
+        dateHappened = Instant.ofEpochSecond(1565429043L),
+        title = Some("TEST EVENT 2"),
+        alertType = AlertType.Info,
+        priority = Priority.Low,
+        host = None,
+        tags = Some(Seq("project:scaladog")),
+        aggregationKey = None,
+        sourceTypeName = None,
+        relatedEventId = None,
+        deviceName = None
+      )
+    )
+
+    assert(actual == expect)
+  }
 }

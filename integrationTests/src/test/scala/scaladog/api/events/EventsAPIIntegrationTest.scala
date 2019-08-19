@@ -37,4 +37,16 @@ class EventsAPIIntegrationTest extends ClientITSpec {
 
     assert(actual == expect)
   }
+
+  test("GET /events") {
+    client.events.query(
+      start = Instant.now(),
+      end = Instant.now(),
+      priority = Priority.Normal,
+      sources = Seq("foo"),
+      tags = Seq("project:scaladog"),
+      unaggregated = true
+    )
+    succeed
+  }
 }
