@@ -12,7 +12,7 @@ final case class Event(
     alertType: AlertType,
     title: Option[String] = None,
     host: Option[String] = None,
-    tags: Option[Seq[String]] = None,
+    tags: Seq[String] = Seq.empty,
     aggregationKey: Option[String] = None,
     sourceTypeName: Option[String] = None,
     relatedEventId: Option[Long] = None,

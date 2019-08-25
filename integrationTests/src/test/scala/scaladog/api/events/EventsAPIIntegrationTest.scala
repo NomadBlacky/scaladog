@@ -28,7 +28,7 @@ class EventsAPIIntegrationTest extends ClientITSpec {
       alertType = AlertType.UserUpdate,
       priority = Priority.Normal,
       host = None,
-      tags = Some(Seq("project:scaladog")),
+      tags = Seq("project:scaladog"),
       aggregationKey = None,
       sourceTypeName = None,
       relatedEventId = None,
