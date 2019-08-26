@@ -37,5 +37,5 @@ object DDPickle extends upickle.AttributeTagged {
     }
 
   implicit val instantRW: ReadWriter[Instant] =
-    readwriter[String].bimap(_.getEpochSecond.toString, s => Instant.ofEpochSecond(s.toLong))
+    readwriter[Long].bimap(_.getEpochSecond, Instant.ofEpochSecond)
 }
