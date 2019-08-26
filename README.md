@@ -133,6 +133,50 @@ val response = scaladog.Client().metrics.postMetrics(
 assert(response.isOk)
 ```
 
+## [Events](https://docs.datadoghq.com/api/?lang=bash#events)
+
+### [Post an event](https://docs.datadoghq.com/api/?lang=bash#post-an-event)
+
+```scala
+import scaladog.api.events._
+import java.time.Instant
+
+val response = scaladog.Client().events.postEvent(
+  title = "TEST EVENT",
+  text = "This is a test event.",
+  dateHappened = Instant.now(),
+  priority = Priority.Low,
+  tags = Seq("project:scaladog"),
+  alertType = AlertType.Info
+)
+
+assert(response.isOk)
+```
+
+### [Get an event](https://docs.datadoghq.com/api/?lang=bash#get-an-event)
+
+```scala
+import scaladog.api.events._
+import java.time.Instant
+
+val event = scaladog.Client().events.getEvent(1234567890123456789L)
+
+assert(event.id == 1234567890123456789L)
+assert(event.title == "TEST EVENT")
+assert(event.text == "This is a test event.")
+assert(event.tags == Seq("project:scaladog"))
+```
+
+### [Query the event stream](https://docs.datadoghq.com/api/?lang=bash#query-the-event-stream)
+
+```scala
+import scaladog.api.events._
+import java.time._, temporal._
+
+val now = Instant.now()
+val events = scaladog.Client().events.query(start = now.minus(1, ChronoUnit.DAYS), end = now)
+```
+
 ## Changelog
 
 ### 0.2.0
