@@ -9,13 +9,13 @@ Add the dependency.
 + build.sbt
 
 ```scala
-libraryDependencies += "dev.nomadblacky" %% "scaladog" % "0.2.0"
+libraryDependencies += "dev.nomadblacky" %% "scaladog" % "0.3.0"
 ```
 
 + or [Ammonite](http://ammonite.io)
 
 ```scala
-import $ivy.`dev.nomadblacky::scaladog:0.2.0`
+import $ivy.`dev.nomadblacky::scaladog:0.3.0`
 ```
 
 Set API key and Application key
@@ -178,6 +178,13 @@ val events = scaladog.Client().events.query(start = now.minus(1, ChronoUnit.DAYS
 ```
 
 ## Changelog
+
+### 0.3.0
+
++ Support Events API (#29)
+  + `POST /v1/events`
+  + `GET /v1/events/<EVENT_ID>`
+  + `GET /v1/events`
 
 ### 0.2.0
 
