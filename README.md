@@ -177,6 +177,23 @@ val now = Instant.now()
 val events = scaladog.Client().events.query(start = now.minus(1, ChronoUnit.DAYS), end = now)
 ```
 
+## [Graphs](https://docs.datadoghq.com/api/?lang=bash#graphs)
+
+### [Graph snapshot](https://docs.datadoghq.com/api/?lang=bash#graph-snapshot)
+
+```scala
+import java.time._, temporal._
+
+val now = Instant.now()
+val url = scaladog.Client().graphs.snapshot(
+  metricQuery = "avg:datadog.estimated_usage.hosts{*}",
+  start = now.minus(7, ChronoUnit.DAYS),
+  end = now,
+  title = getClass.getSimpleName
+)
+assert(url.toString startsWith "https://p.datadoghq.com/snapshot/view/dd-snapshots-prod/")
+```
+
 ## Changelog
 
 ### 0.3.0
