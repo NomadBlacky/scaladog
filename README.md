@@ -9,13 +9,13 @@ Add the dependency.
 + build.sbt
 
 ```scala
-libraryDependencies += "dev.nomadblacky" %% "scaladog" % "0.3.0"
+libraryDependencies += "dev.nomadblacky" %% "scaladog" % "0.4.0"
 ```
 
 + or [Ammonite](http://ammonite.io)
 
 ```scala
-import $ivy.`dev.nomadblacky::scaladog:0.3.0`
+import $ivy.`dev.nomadblacky::scaladog:0.4.0`
 ```
 
 Set API key and Application key
@@ -195,6 +195,11 @@ assert(url.toString startsWith "https://p.datadoghq.com/snapshot/view/dd-snapsho
 ```
 
 ## Changelog
+
+### 0.4.0
+
++ Support Graphs API (#42)
+  + `GET /v1/graph/snapshot`
 
 ### 0.3.0
 
