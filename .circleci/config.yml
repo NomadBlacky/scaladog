@@ -1,7 +1,7 @@
 version: 2.1
 
-.jvm_opts: &jvm_opts
-  JVM_OPTS: -Xmx3200m
+.java_tool_options: &java_tool_options
+  JAVA_TOOL_OPTIONS: -Xmx3200m
 
 commands:
   sbt_test:
@@ -27,7 +27,7 @@ jobs:
     docker:
       - image: hseeberger/scala-sbt:8u212_1.2.8_2.12.8
     environment:
-      <<: *jvm_opts
+      <<: *java_tool_options
     steps:
       - sbt_test
 
@@ -35,7 +35,7 @@ jobs:
     docker:
       - image: hseeberger/scala-sbt:11.0.3_1.2.8_2.12.8
     environment:
-      <<: *jvm_opts
+      <<: *java_tool_options
     steps:
       - sbt_test
 
@@ -43,7 +43,7 @@ jobs:
     docker:
       - image: hseeberger/scala-sbt:8u212_1.2.8_2.12.8
     environment:
-      <<: *jvm_opts
+      <<: *java_tool_options
     steps:
       - sbt_test:
           command: sbt clean scalafmtCheckAll scalafmtSbtCheck
