@@ -3,9 +3,7 @@ package scaladog
 import scaladog.api.DatadogSite
 
 class ClientImplTest extends ScaladogUnitTest {
-
   describe("apply default") {
-
     it("should throw IllegalArgumentException if DATADOG_API_KEY is not found") {
       removeEnv("DATADOG_API_KEY")
       assertThrows[IllegalArgumentException] {
@@ -33,5 +31,4 @@ class ClientImplTest extends ScaladogUnitTest {
       }
     }
   }
-
 }

@@ -4,7 +4,6 @@ import requests.Requester
 import scaladog.ScaladogUnitTest
 
 class APIClientTest extends ScaladogUnitTest {
-
   describe("Error handling") {
     it("should throws DatadogApiException when return a JSON response") {
       val requester = genTestRequester(
