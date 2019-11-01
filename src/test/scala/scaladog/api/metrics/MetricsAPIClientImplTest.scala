@@ -8,7 +8,6 @@ import scaladog.ScaladogUnitTest
 import scaladog.api.StatusResponse
 
 class MetricsAPIClientImplTest extends FunSpec with ScaladogUnitTest {
-
   describe("getMetrics") {
     it("getMetrics") {
       val requester = genTestRequester(

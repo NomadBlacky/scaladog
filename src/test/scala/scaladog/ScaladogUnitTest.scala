@@ -7,7 +7,6 @@ import requests._
 import scaladog.api.DatadogSite
 
 trait ScaladogUnitTest extends FunSpec {
-
   val apiKey = "api_key"
   val appKey = "app_key"
   val site   = DatadogSite.US

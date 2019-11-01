@@ -5,7 +5,6 @@ import java.time.Instant
 import scaladog.ScaladogUnitTest
 
 class EventsAPIClientImplTest extends ScaladogUnitTest {
-
   it("postEvent") {
     val requester = genTestRequester(
       url = "https://api.datadoghq.com/api/v1/events",

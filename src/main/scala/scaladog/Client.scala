@@ -13,7 +13,6 @@ trait Client {
 }
 
 object Client extends ReadEnv {
-
   def apply(
       apiKey: String = readEnv("DATADOG_API_KEY"),
       appKey: String = readEnv("DATADOG_APP_KEY"),

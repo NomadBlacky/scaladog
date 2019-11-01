@@ -9,7 +9,6 @@ import scala.collection.immutable.IndexedSeq
 sealed trait AlertType extends EnumEntry with Snakecase
 
 object AlertType extends UPickleEnum[AlertType] {
-
   case object Info       extends AlertType
   case object Success    extends AlertType
   case object Warning    extends AlertType

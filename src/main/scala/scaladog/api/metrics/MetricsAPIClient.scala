@@ -21,11 +21,9 @@ private[metrics] final case class MetricsAPIClientImpl(
     site: DatadogSite,
     _requester: Option[Requester] = None
 ) extends MetricsAPIClient {
-
   def getMetrics(from: Instant, host: String = ""): GetMetricsResponse =
     httpGet[GetMetricsResponse]("/metrics", Seq("from" -> from.getEpochSecond.toString, "host" -> host))
 
   def postMetrics(series: Seq[Series]): StatusResponse =
     httpPost[PostMetricsRequest, StatusResponse]("/series", PostMetricsRequest(series))
-
 }

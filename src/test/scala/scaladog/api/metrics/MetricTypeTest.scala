@@ -4,9 +4,7 @@ import org.scalatest.FunSpec
 import scaladog.api.DDPickle
 
 class MetricTypeTest extends FunSpec {
-
   describe("readwriter") {
-
     it("should read a string") {
       assert(DDPickle.read[MetricType]("\"rate\"") == MetricType.Rate)
     }

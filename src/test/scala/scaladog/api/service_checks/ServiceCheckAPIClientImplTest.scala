@@ -4,7 +4,6 @@ import org.scalatest.FunSpec
 import scaladog.ScaladogUnitTest
 
 class ServiceCheckAPIClientImplTest extends FunSpec with ScaladogUnitTest {
-
   describe("") {
     val requester = genTestRequester(
       url = "https://api.datadoghq.com/api/v1/check_run",

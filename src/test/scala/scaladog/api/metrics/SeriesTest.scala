@@ -6,7 +6,6 @@ import org.scalatest.FunSpec
 import scaladog.api.DDPickle
 
 class SeriesTest extends FunSpec {
-
   describe("writer") {
     it("should serialize Series to JSON object") {
       val series = Series(
