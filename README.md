@@ -28,6 +28,10 @@ export DATADOG_APP_KEY=<your application key>
 export DATADOG_SITE=<your site> # Optional, "US" or "EU", default is "US"
 ```
 
+```scala
+val client = scaladog.Client()
+```
+
 + or manually
 
 ```scala
