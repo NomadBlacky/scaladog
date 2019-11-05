@@ -25,7 +25,7 @@ commands:
 jobs:
   test_jdk8:
     docker:
-      - image: hseeberger/scala-sbt:8u212_1.2.8_2.12.8
+      - image: hseeberger/scala-sbt:8u222_1.3.3_2.13.1
     environment:
       <<: *java_tool_options
     steps:
@@ -33,7 +33,7 @@ jobs:
 
   test_jdk11:
     docker:
-      - image: hseeberger/scala-sbt:11.0.3_1.2.8_2.12.8
+      - image: hseeberger/scala-sbt:11.0.4_1.3.3_2.13.1
     environment:
       <<: *java_tool_options
     steps:
@@ -41,7 +41,7 @@ jobs:
 
   test_scalafmt:
     docker:
-      - image: hseeberger/scala-sbt:8u212_1.2.8_2.12.8
+      - image: hseeberger/scala-sbt:8u222_1.3.3_2.13.1
     environment:
       <<: *java_tool_options
     steps:
