@@ -43,9 +43,9 @@ lazy val scaladog = (project in file("."))
         commitReleaseVersion,
         tagRelease,
         releaseStepCommandAndRemaining("+publishSigned"),
+        releaseStepCommand("sonatypeBundleRelease"),
         setNextVersion,
         commitNextVersion,
-        releaseStepCommand("sonatypeReleaseAll"),
         pushChanges
       )
   )
