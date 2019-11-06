@@ -47,7 +47,7 @@ val client = scaladog.Client("<your api key>", "<your application key>", scalado
 + [ ] Downtimes
 + [ ] Embeddable graphs
 + [x] Events
-+ [ ] Graphs
++ [x] Graphs
 + [ ] Hosts
 + [ ] Integration AWS
 + [ ] Integration Azure
