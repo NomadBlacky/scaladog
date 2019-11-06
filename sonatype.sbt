@@ -32,4 +32,4 @@ developers := List(
   )
 )
 
-publishTo in ThisBuild := sonatypePublishTo.value
+ThisBuild / publishTo := sonatypePublishToBundle.value
