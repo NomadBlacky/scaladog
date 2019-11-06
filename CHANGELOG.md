@@ -1,5 +1,9 @@
 ## Changelog
 
+### 0.4.2
+
++ Provide default parameters by APIClientFactory#apply (#67)
+
 ### 0.4.1
 
 + Update upickle to 0.8.0 (#51)
