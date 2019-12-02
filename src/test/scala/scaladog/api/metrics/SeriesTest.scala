@@ -2,10 +2,10 @@ package scaladog.api.metrics
 
 import java.time.Instant
 
-import org.scalatest.FunSpec
 import scaladog.api.DDPickle
+import org.scalatest.funspec.AnyFunSpec
 
-class SeriesTest extends FunSpec {
+class SeriesTest extends AnyFunSpec {
   describe("writer") {
     it("should serialize Series to JSON object") {
       val series = Series(

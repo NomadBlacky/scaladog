@@ -2,11 +2,11 @@ package scaladog
 
 import java.net.HttpCookie
 
-import org.scalatest.FunSpec
 import requests._
 import scaladog.api.DatadogSite
+import org.scalatest.funspec.AnyFunSpec
 
-trait ScaladogUnitTest extends FunSpec {
+trait ScaladogUnitTest extends AnyFunSpec {
   val apiKey = "api_key"
   val appKey = "app_key"
   val site   = DatadogSite.US
