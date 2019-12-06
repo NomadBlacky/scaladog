@@ -3,11 +3,11 @@ package scaladog.api.metrics
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 
-import org.scalatest.FunSpec
 import scaladog.ScaladogUnitTest
 import scaladog.api.StatusResponse
+import org.scalatest.funspec.AnyFunSpec
 
-class MetricsAPIClientImplTest extends FunSpec with ScaladogUnitTest {
+class MetricsAPIClientImplTest extends AnyFunSpec with ScaladogUnitTest {
   describe("getMetrics") {
     it("getMetrics") {
       val requester = genTestRequester(
