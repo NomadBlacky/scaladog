@@ -29,7 +29,7 @@ lazy val scaladog = (project in file("."))
     libraryDependencies ++= Seq(
         "com.lihaoyi"   %% "requests"   % "0.2.0",
         "com.lihaoyi"   %% "upickle"    % "0.8.0",
-        "com.beachape"  %% "enumeratum" % "1.5.13",
+        "com.beachape"  %% "enumeratum" % "1.5.14",
         "org.scalatest" %% "scalatest"  % "3.1.0" % Test
       ),
     releaseCrossBuild := true,
