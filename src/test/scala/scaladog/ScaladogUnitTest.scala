@@ -2,9 +2,9 @@ package scaladog
 
 import java.net.HttpCookie
 
+import org.scalatest.funspec.AnyFunSpec
 import requests._
 import scaladog.api.DatadogSite
-import org.scalatest.funspec.AnyFunSpec
 
 trait ScaladogUnitTest extends AnyFunSpec {
   val apiKey = "api_key"
@@ -17,8 +17,8 @@ trait ScaladogUnitTest extends AnyFunSpec {
         url,
         statusCode,
         "MESSAGE",
+        new geny.Bytes(body.getBytes("utf-8")),
         Map.empty,
-        new ResponseBlob(body.getBytes("utf-8")),
         None
       )
     )
@@ -56,6 +56,8 @@ class TestRequester(dummyResponse: Response) extends Requester("METHOD", Session
       verifySslCerts: Boolean,
       autoDecompress: Boolean,
       compress: Compress,
-      keepAlive: Boolean
+      keepAlive: Boolean,
+      check: Boolean,
+      chunkedUpload: Boolean
   ): Response = dummyResponse
 }
