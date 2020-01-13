@@ -1,0 +1,18 @@
+pull_request_rules:
+  - name: assign and label scala-steward's PRs
+    conditions:
+      - author=scala-steward
+    actions:
+      assign:
+        users: [NomadBlacky]
+      label:
+        add: [dependencies]
+  - name: merge scala-steward's PRs
+    conditions:
+      - author=scala-steward
+      - "status-success=ci/circleci: test_jdk11"
+      - "status-success=ci/circleci: test_jdk8"
+      - "status-success=ci/circleci: test_scalafmt"
+    actions:
+      merge:
+        method: squash
