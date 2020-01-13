@@ -2,11 +2,12 @@ package scaladog
 
 import java.net.HttpCookie
 
+import org.mockito.scalatest.MockitoSugar
 import org.scalatest.funspec.AnyFunSpec
 import requests._
 import scaladog.api.DatadogSite
 
-trait ScaladogUnitTest extends AnyFunSpec {
+trait ScaladogUnitTest extends AnyFunSpec with MockitoSugar {
   val apiKey = "api_key"
   val appKey = "app_key"
   val site   = DatadogSite.US

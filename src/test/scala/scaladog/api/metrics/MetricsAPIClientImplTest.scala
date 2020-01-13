@@ -5,11 +5,10 @@ import java.time.temporal.ChronoUnit
 
 import scaladog.ScaladogUnitTest
 import scaladog.api.StatusResponse
-import org.scalatest.funspec.AnyFunSpec
 
-class MetricsAPIClientImplTest extends AnyFunSpec with ScaladogUnitTest {
+class MetricsAPIClientImplTest extends ScaladogUnitTest {
   describe("getMetrics") {
-    it("getMetrics") {
+    it("returns a metrics list") {
       val requester = genTestRequester(
         url = "https://api.datadoghq.com/api/v1/check_run",
         statusCode = 200,
@@ -32,24 +31,41 @@ class MetricsAPIClientImplTest extends AnyFunSpec with ScaladogUnitTest {
         Instant.ofEpochSecond(1559347200L),
         Some("myhost")
       )
-      assert(actual == expect)
+      assert(actual === expect)
+    }
+  }
+
+  describe("post metrics operations") {
+
+    val requester = genTestRequester(
+      url = "https://api.datadoghq.com/api/v1/series",
+      statusCode = 200,
+      """{
+        |    "status":"ok"
+        |}
+        """.stripMargin.trim
+    )
+    def newClient = MetricsAPIClientImpl(apiKey, appKey, site, Some(requester))
+
+    describe("postMetrics") {
+      it("returns OK when the request is succeeded") {
+        assert(newClient.postMetrics(Seq.empty) === StatusResponse("ok"))
+      }
     }
 
-    it("postMetrics") {
-      val requester = genTestRequester(
-        url = "https://api.datadoghq.com/api/v1/series",
-        statusCode = 200,
-        """{
-          |    "status":"ok"
-          |}
-        """.stripMargin.trim
-      )
-      val client = MetricsAPIClientImpl(apiKey, appKey, site, Some(requester))
+    describe("postSingleMetric") {
+      val instant = Instant.parse("2020-01-01T00:00:00Z")
 
-      val actual = client.postMetrics(Seq.empty)
-      val expect = StatusResponse("ok")
+      val client = spy(newClient, lenient = true)
+      val actual = client.postSingleMetric("example.metrics", 10, instant)
 
-      assert(actual == expect)
+      it("returns OK") {
+        assert(actual === StatusResponse("ok"))
+      }
+
+      it("calls postMetrics(Seq[Series])") {
+        verify(client).postMetrics(Seq(Series("example.metrics", Seq(Point(instant, 10)))))
+      }
     }
   }
 }
