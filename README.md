@@ -137,6 +137,9 @@ val response = scaladog.Client().metrics.postMetrics(
 )
 
 assert(response.isOk)
+
+// If you want to send a single metric, you can write more simply.
+scaladog.Client().metrics.postSingleMetric("test.metric", 12.34)
 ```
 
 ## [Events](https://docs.datadoghq.com/api/?lang=bash#events)

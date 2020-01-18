@@ -22,7 +22,7 @@ object ReleaseProcesses {
     state.log.info("Execute `git add README.md` ...")
     val result = os.proc("git", "add", "README.md").call()
     if (result.exitCode != 0) {
-      sys.error(result.err.string)
+      sys.error(result.err.text())
     }
     state.log.info("Added README.md")
 
