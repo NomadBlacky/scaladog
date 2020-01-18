@@ -11,13 +11,13 @@ Add the dependency.
 + build.sbt
 
 ```scala
-libraryDependencies += "dev.nomadblacky" %% "scaladog" % "0.4.3"
+libraryDependencies += "dev.nomadblacky" %% "scaladog" % "0.5.0"
 ```
 
 + or [Ammonite](http://ammonite.io)
 
 ```scala
-import $ivy.`dev.nomadblacky::scaladog:0.4.3`
+import $ivy.`dev.nomadblacky::scaladog:0.5.0`
 ```
 
 Set API key and Application key
