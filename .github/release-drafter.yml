@@ -12,6 +12,8 @@ categories:
       - 'bug'
   - title: 'Dependency Updates'
     label: 'dependencies'
+  - title: 'Builds'
+    label: 'build'
 change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
 template: |
   ## Changes
