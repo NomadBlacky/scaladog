@@ -8,9 +8,7 @@ case class PostEventResponse(status: String, id: Long, url: String) {
 
 object PostEventResponse {
   implicit val reader: DDPickle.Reader[PostEventResponse] =
-    DDPickle.reader[PostEventResponseDTO].map { dto =>
-      PostEventResponse(dto.status, dto.event.id, dto.event.url)
-    }
+    DDPickle.reader[PostEventResponseDTO].map(dto => PostEventResponse(dto.status, dto.event.id, dto.event.url))
 }
 
 // workaround: https://github.com/lihaoyi/upickle/issues/278
