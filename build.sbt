@@ -31,7 +31,7 @@ lazy val scaladog = (project in file("."))
         "com.lihaoyi"   %% "upickle"                 % "1.0.0",
         "com.beachape"  %% "enumeratum"              % "1.5.15",
         "org.scalatest" %% "scalatest"               % "3.1.1" % Test,
-        "org.mockito"   %% "mockito-scala-scalatest" % "1.11.3" % Test
+        "org.mockito"   %% "mockito-scala-scalatest" % "1.11.4" % Test
       ),
     releaseCrossBuild := true,
     releaseProcess := Seq[ReleaseStep](
