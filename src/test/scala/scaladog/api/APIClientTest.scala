@@ -53,9 +53,9 @@ class APIClientTest extends ScaladogUnitTest {
 }
 
 case class DummyAPIClient(requester: Requester) extends APIClient {
-  protected val apiKey: String                = "apiKey"
-  protected val appKey: String                = "appKey"
-  val site: DatadogSite                       = DatadogSite.US
+  protected val apiKey: String = "apiKey"
+  protected val appKey: String = "appKey"
+  val site: DatadogSite = DatadogSite.US
   protected val _requester: Option[Requester] = Some(requester)
 
   def request(): DummyResponse = httpGet[DummyResponse]("/foo", Seq.empty)

@@ -11,7 +11,7 @@ trait APIClient {
   def site: DatadogSite
   protected def _requester: Option[Requester] // for unit tests
 
-  private def defaultParams  = Seq("api_key"      -> apiKey, "application_key" -> appKey)
+  private def defaultParams = Seq("api_key" -> apiKey, "application_key" -> appKey)
   private val defaultHeaders = Seq("Content-Type" -> "application/json")
 
   protected def baseUrl = s"https://api.datadoghq.${site.domain}/api/v1"
