@@ -12,6 +12,6 @@ object MetricType extends UPickleEnum[MetricType] {
   val values: IndexedSeq[MetricType] = findValues
 
   case object Gauge extends MetricType
-  case object Rate  extends MetricType
+  case object Rate extends MetricType
   case object Count extends MetricType
 }
