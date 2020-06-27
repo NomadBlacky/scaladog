@@ -51,6 +51,7 @@ class TestRequester(dummyResponse: Response) extends Requester("METHOD", Session
       readTimeout: Int,
       connectTimeout: Int,
       proxy: (String, Int),
+      cert: Cert,
       cookies: Map[String, HttpCookie],
       cookieValues: Map[String, String],
       maxRedirects: Int,
@@ -61,4 +62,6 @@ class TestRequester(dummyResponse: Response) extends Requester("METHOD", Session
       check: Boolean,
       chunkedUpload: Boolean
   ): Response = dummyResponse
+
+  override def apply(r: Request, data: RequestBlob, chunkedUpload: Boolean): Response = dummyResponse
 }
