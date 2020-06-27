@@ -2,6 +2,7 @@ package scaladog
 
 import java.net.HttpCookie
 
+import javax.net.ssl.SSLContext
 import org.mockito.scalatest.MockitoSugar
 import org.scalatest.funspec.AnyFunSpec
 import requests._
@@ -52,6 +53,7 @@ class TestRequester(dummyResponse: Response) extends Requester("METHOD", Session
       connectTimeout: Int,
       proxy: (String, Int),
       cert: Cert,
+      sslContext: SSLContext,
       cookies: Map[String, HttpCookie],
       cookieValues: Map[String, String],
       maxRedirects: Int,
