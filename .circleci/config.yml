@@ -8,7 +8,7 @@ commands:
     parameters:
       command:
         type: string
-        default: sbt clean +test
+        default: sbt clean +test integrationTests/test:compile
     steps:
       - checkout
       - restore_cache:
