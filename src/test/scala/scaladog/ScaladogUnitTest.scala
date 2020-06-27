@@ -10,7 +10,7 @@ import scaladog.api.DatadogSite
 trait ScaladogUnitTest extends AnyFunSpec with MockitoSugar {
   val apiKey = "api_key"
   val appKey = "app_key"
-  val site   = DatadogSite.US
+  val site = DatadogSite.US
 
   def genTestRequester(url: String, statusCode: Int, body: String): Requester = {
     new TestRequester(

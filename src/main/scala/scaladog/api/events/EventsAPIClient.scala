@@ -85,13 +85,13 @@ private[events] class EventsAPIClientImpl(
       unaggregated: Boolean = false
   ): Seq[Event] = {
     val params: ListBuffer[(String, String)] = ListBuffer(
-      "start"        -> start.getEpochSecond.toString,
-      "end"          -> end.getEpochSecond.toString,
+      "start" -> start.getEpochSecond.toString,
+      "end" -> end.getEpochSecond.toString,
       "unaggregated" -> unaggregated.toString
     )
     if (priority != null) params += ("priority" -> priority.entryName)
-    if (sources.nonEmpty) params += ("sources"  -> sources.mkString(","))
-    if (tags.nonEmpty) params += ("tags"        -> tags.mkString(","))
+    if (sources.nonEmpty) params += ("sources" -> sources.mkString(","))
+    if (tags.nonEmpty) params += ("tags" -> tags.mkString(","))
 
     val response = httpGet[QueryEventsResponse]("/events", params.toSeq)
     response.events

@@ -26,8 +26,8 @@ private[scaladog] class ClientImpl(
     appKey: String,
     val site: DatadogSite
 ) extends Client {
-  val metrics: MetricsAPIClient           = MetricsAPIClient(apiKey, appKey, site)
+  val metrics: MetricsAPIClient = MetricsAPIClient(apiKey, appKey, site)
   val serviceCheck: ServiceCheckAPIClient = ServiceCheckAPIClient(apiKey, appKey, site)
-  val events: EventsAPIClient             = EventsAPIClient(apiKey, appKey, site)
-  val graphs: GraphsAPIClient             = GraphsAPIClient(apiKey, appKey, site)
+  val events: EventsAPIClient = EventsAPIClient(apiKey, appKey, site)
+  val graphs: GraphsAPIClient = GraphsAPIClient(apiKey, appKey, site)
 }

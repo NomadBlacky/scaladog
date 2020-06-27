@@ -10,7 +10,7 @@ sealed trait Priority extends EnumEntry with Lowercase
 
 object Priority extends Enum[Priority] {
   case object Normal extends Priority
-  case object Low    extends Priority
+  case object Low extends Priority
 
   val values: IndexedSeq[Priority] = findValues
 

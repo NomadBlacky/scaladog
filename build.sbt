@@ -11,14 +11,14 @@ ThisBuild / organizationName := "NomadBlacky"
 
 lazy val commonSettings = Seq(
   scalacOptions ++= Seq(
-      "-deprecation",
-      "-feature",
-      "-unchecked",
-      "-Xlint",
-      "-Xfatal-warnings",
-      "-Ywarn-dead-code",
-      "-Ywarn-numeric-widen"
-    )
+    "-deprecation",
+    "-feature",
+    "-unchecked",
+    "-Xlint",
+    "-Xfatal-warnings",
+    "-Ywarn-dead-code",
+    "-Ywarn-numeric-widen"
+  )
 )
 
 lazy val scaladog = (project in file("."))
@@ -27,28 +27,28 @@ lazy val scaladog = (project in file("."))
     name := "scaladog",
     crossScalaVersions := supportedScalaVersions,
     libraryDependencies ++= Seq(
-        "com.lihaoyi"   %% "requests"                % "0.5.2",
-        "com.lihaoyi"   %% "upickle"                 % "1.1.0",
-        "com.beachape"  %% "enumeratum"              % "1.5.15",
-        "org.scalatest" %% "scalatest"               % "3.1.1" % Test,
-        "org.mockito"   %% "mockito-scala-scalatest" % "1.13.9" % Test
-      ),
+      "com.lihaoyi" %% "requests" % "0.5.2",
+      "com.lihaoyi" %% "upickle" % "1.1.0",
+      "com.beachape" %% "enumeratum" % "1.6.1",
+      "org.scalatest" %% "scalatest" % "3.2.0" % Test,
+      "org.mockito" %% "mockito-scala-scalatest" % "1.14.8" % Test
+    ),
     releaseCrossBuild := true,
     releaseProcess := Seq[ReleaseStep](
-        checkSnapshotDependencies,
-        inquireVersions,
-        runClean,
-        runTest,
-        setReleaseVersion,
-        ReleaseProcesses.setReleaseVersionToReadme,
-        commitReleaseVersion,
-        tagRelease,
-        releaseStepCommandAndRemaining("+publishSigned"),
-        releaseStepCommand("sonatypeBundleRelease"),
-        setNextVersion,
-        commitNextVersion,
-        pushChanges
-      )
+      checkSnapshotDependencies,
+      inquireVersions,
+      runClean,
+      runTest,
+      setReleaseVersion,
+      ReleaseProcesses.setReleaseVersionToReadme,
+      commitReleaseVersion,
+      tagRelease,
+      releaseStepCommandAndRemaining("+publishSigned"),
+      releaseStepCommand("sonatypeBundleRelease"),
+      setNextVersion,
+      commitNextVersion,
+      pushChanges
+    )
   )
 
 lazy val integrationTests = (project in file("integrationTests"))

@@ -32,11 +32,11 @@ private[graphs] class GraphsAPIClientImpl(
   override def snapshot(metricQuery: String, start: Instant, end: Instant, eventQuery: String, title: String): URL = {
     val params = ListBuffer(
       "metric_query" -> metricQuery,
-      "start"        -> start.getEpochSecond.toString,
-      "end"          -> end.getEpochSecond.toString
+      "start" -> start.getEpochSecond.toString,
+      "end" -> end.getEpochSecond.toString
     )
     if (eventQuery != null) params += ("event_query" -> eventQuery)
-    if (title != null) params += ("title"            -> title)
+    if (title != null) params += ("title" -> title)
 
     new URL(httpGet[SnapshotResponse]("/graph/snapshot", params.toSeq).snapshotUrl)
   }
