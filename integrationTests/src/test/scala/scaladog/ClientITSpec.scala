@@ -1,7 +1,7 @@
 package scaladog
 
-import org.scalatest.FunSuiteLike
+import org.scalatest.funsuite.AnyFunSuiteLike
 
-trait ClientITSpec extends FunSuiteLike {
+trait ClientITSpec extends AnyFunSuiteLike {
   lazy val client = scaladog.Client()
 }
