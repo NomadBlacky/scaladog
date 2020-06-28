@@ -34,7 +34,7 @@ trait APIClient {
       read[Res](response.text())
     } else {
       val errors = {
-        val errorsT = Try(ujson.read(response.text).obj("errors").arr.mkString("[", ",", "]"))
+        val errorsT = Try(ujson.read(response.text()).obj("errors").arr.mkString("[", ",", "]"))
         errorsT.getOrElse(response.text())
       }
       val message = s"${response.statusCode} ${response.statusMessage}: $errors"
