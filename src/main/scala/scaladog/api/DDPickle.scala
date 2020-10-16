@@ -2,13 +2,14 @@ package scaladog.api
 
 import java.time.Instant
 
-/**
-  * http://www.lihaoyi.com/upickle/#CustomConfiguration
+/** http://www.lihaoyi.com/upickle/#CustomConfiguration
   */
 object DDPickle extends upickle.AttributeTagged {
+
   private def camelToSnake(s: String) = {
     s.split("(?=[A-Z])", -1).map(_.toLowerCase).mkString("_")
   }
+
   private def snakeToCamel(s: String) = {
     val res = s.split("_", -1).map(x => s"${x(0).toUpper}${x.drop(1)}").mkString
     s"${s(0).toLower}${res.drop(1)}"
@@ -16,11 +17,13 @@ object DDPickle extends upickle.AttributeTagged {
 
   override def objectAttributeKeyReadMap(s: CharSequence): String =
     snakeToCamel(s.toString)
+
   override def objectAttributeKeyWriteMap(s: CharSequence): String =
     camelToSnake(s.toString)
 
   override def objectTypeKeyReadMap(s: CharSequence): String =
     snakeToCamel(s.toString)
+
   override def objectTypeKeyWriteMap(s: CharSequence): String =
     camelToSnake(s.toString)
 
