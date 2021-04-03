@@ -1,7 +1,7 @@
 import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations._
 
 val Scala2_13 = "2.13.3"
-val Scala2_12 = "2.12.11"
+val Scala2_12 = "2.12.13"
 
 val supportedScalaVersions = List(Scala2_13, Scala2_12)
 
