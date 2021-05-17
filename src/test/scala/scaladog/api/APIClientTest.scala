@@ -3,6 +3,8 @@ package scaladog.api
 import requests.Requester
 import scaladog.ScaladogUnitTest
 
+import scala.annotation.nowarn
+
 class APIClientTest extends ScaladogUnitTest {
   describe("Error handling") {
     it("should throws DatadogApiException when return a JSON response") {
@@ -64,5 +66,6 @@ case class DummyAPIClient(requester: Requester) extends APIClient {
 case class DummyResponse(state: String)
 
 object DummyResponse {
-  implicit val reader: DDPickle.Reader[DummyResponse] = DDPickle.macroR
+  // https://github.com/com-lihaoyi/upickle/issues/345
+  @nowarn implicit val reader: DDPickle.Reader[DummyResponse] = DDPickle.macroR
 }
