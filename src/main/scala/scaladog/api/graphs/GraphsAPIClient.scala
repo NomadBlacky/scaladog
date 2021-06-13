@@ -2,10 +2,10 @@ package scaladog.api.graphs
 
 import java.net.URL
 import java.time.Instant
-
 import requests.Requester
 import scaladog.api.{APIClient, APIClientFactory, DDPickle, DatadogSite}
 
+import scala.annotation.nowarn
 import scala.collection.mutable.ListBuffer
 
 trait GraphsAPIClient extends APIClient {
@@ -45,5 +45,6 @@ private[graphs] class GraphsAPIClientImpl(
 private[graphs] case class SnapshotResponse(snapshotUrl: String)
 
 private[graphs] object SnapshotResponse {
-  implicit val reader: DDPickle.Reader[SnapshotResponse] = DDPickle.macroR
+  // https://github.com/com-lihaoyi/upickle/issues/345
+  @nowarn implicit val reader: DDPickle.Reader[SnapshotResponse] = DDPickle.macroR
 }
