@@ -10,9 +10,9 @@ pull_request_rules:
   - name: merge scala-steward's PRs
     conditions:
       - author=scala-steward
-      - "status-success=ci/circleci: test_jdk11"
-      - "status-success=ci/circleci: test_jdk8"
-      - "status-success=ci/circleci: test_scalafmt"
+      - check-success=Scala CI / scalafmt
+      - check-success=Scala CI / test (8)
+      - check-success=Scala CI / test (11)
     actions:
       merge:
         method: squash
