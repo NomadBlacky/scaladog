@@ -12,7 +12,7 @@ licenses := Seq(
 // Where is the source code hosted
 import xerial.sbt.Sonatype._
 sonatypeProjectHosting := Some(
-  GitHubHosting("NomadBlacky", "scaladog", "tkadowaki.dev.blackey@gmail.com")
+  GitHubHosting("NomadBlacky", "scaladog", "nomadblacky@gmail.com")
 )
 
 // or if you want to set these fields manually
@@ -27,7 +27,7 @@ developers := List(
   Developer(
     id = "NomadBlacky",
     name = "Takumi Kadowaki",
-    email = "tkadowaki.dev.blackey@gmail.com",
+    email = "nomadblacky@gmail.com",
     url = url("https://www.nomadblacky.dev")
   )
 )
