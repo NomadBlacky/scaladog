@@ -4,5 +4,5 @@ addSbtPlugin("com.github.sbt" % "sbt-pgp" % "2.2.0")
 addSbtPlugin("com.github.sbt" % "sbt-release" % "1.1.0")
 
 libraryDependencies ++= Seq(
-  "com.lihaoyi" %% "os-lib" % "0.8.1"
+  "com.lihaoyi" %% "os-lib" % "0.9.1"
 )
